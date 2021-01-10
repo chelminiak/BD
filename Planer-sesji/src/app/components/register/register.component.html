@@ -1,5 +1,5 @@
 <section>
-    <form (ngSubmit)="register()" [formGroup] = "reg">
+    <form (ngSubmit)="onSubmit()" [formGroup] = "reg">
         <h2>Rejestracja</h2>
         <div class="field">
             <label>Login</label>
@@ -27,7 +27,7 @@
             <input type="text" name="experience" class="input" placeholder="np. 2 lata, 3 miesiące" formControlName="experience" [ngClass]="{'register-submitted': regSubmitted}">
         </div>
         <div class="field">
-            <button type = "submit" [disabled]="!reg.valid">Rejestracja</button><br>
+            <button type = "submit" [disabled]="!reg.valid || !reg.touched" class="btn btn-success">Rejestracja</button><br>
         </div>
         <div class="field">
             <p>{{ message }}</p>
