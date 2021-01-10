@@ -1,0 +1,36 @@
+<section>
+    <form (ngSubmit)="register()" [formGroup] = "reg">
+        <h2>Rejestracja</h2>
+        <div class="field">
+            <label>Login</label>
+            <input type="text" name="login" class="input" placeholder="login" formControlName="login"  [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
+            <label>Hasło</label>
+            <input type="password" name="password" class="input" formControlName="password" [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
+            <h3>Jestem:</h3>
+                <input type="radio" name="category" value="BG" formControlName="type" checked /> Graczem
+                <input type="radio" name="category" value="GM" formControlName="type" /> Mistrzem Gry <br>
+        </div>
+        <div class="field">
+            <label>Imię</label>
+            <input type="text" name="name" class="input" placeholder="Imię" formControlName="name" [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
+            <label>System</label>
+            <input type="text" name="system" class="input" placeholder="Nazwa systemu np. Zew Cthulhu, Warhammer, D&D" formControlName="system" [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
+            <label>Staż (opcjonalny) </label>
+            <input type="text" name="experience" class="input" placeholder="np. 2 lata, 3 miesiące" formControlName="experience" [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
+            <button type = "submit" [disabled]="!reg.valid">Rejestracja</button><br>
+        </div>
+        <div class="field">
+            <p>{{ message }}</p>
+        </div>
+    </form>
+</section>
