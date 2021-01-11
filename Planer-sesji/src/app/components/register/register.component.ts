@@ -1,5 +1,6 @@
-import {FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-register',
@@ -11,11 +12,22 @@ export class RegisterComponent implements OnInit {
   message: string
   regSubmitted= false
 
-  constructor(private formBuilder: FormBuilder) {  }
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {  }
 
   onSubmit(){
+    this.message = ''
     if (this.reg.valid){
-    this.message = 'Spokojnie, rejestracja jeszcze się nie rozpoczęła :)'
+      this.regSubmitted = true
+      if (this.reg.get('type').value =='GM'){
+        const options = { headers: { 'Content-Type': 'application/json' } };
+
+        this.http.post<string>("https://g19.labagh.pl/php/register.php", JSON.stringify(this.reg.value), options).subscribe(
+          data => this.message = '' + data,
+          error => this.message = '' + error
+        );
+      } else {
+        this.message = "Spokojnie, na razie rejestrujemy tylko Mistrzów Gry :)"
+      }
     } else{
       this.message = "Wypełnij wszystkie wymagane pola!"
     }
@@ -30,7 +42,6 @@ export class RegisterComponent implements OnInit {
       system: [null, [Validators.required]],
       experience: [null]
     })
-    this.reg.touched
     }
   
   reg = new FormGroup({
