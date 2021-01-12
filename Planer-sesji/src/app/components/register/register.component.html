@@ -6,6 +6,10 @@
             <input type="text" name="login" class="input" placeholder="login" formControlName="login"  [ngClass]="{'register-submitted': regSubmitted}">
         </div>
         <div class="field">
+            <label>Adres e-mail</label>
+            <input type="text" name="email" class="input" placeholder="email@domena.pl" formControlName="email"  [ngClass]="{'register-submitted': regSubmitted}">
+        </div>
+        <div class="field">
             <label>Hasło</label>
             <input type="password" name="password" class="input" formControlName="password" [ngClass]="{'register-submitted': regSubmitted}">
         </div>

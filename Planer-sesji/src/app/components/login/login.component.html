@@ -1,1 +1,22 @@
-<p>login works!</p>
+<section>
+    <form (ngSubmit)="onSubmit()" [formGroup] = "log">
+        <h2>Logowanie</h2>
+        <div class="field">
+            <label>Login</label>
+            <input type="text" name="login" class="input" placeholder="login" formControlName="login">
+        </div>
+        <div class="field">
+            <label>Hasło</label>
+            <input type="password" name="password" class="input" formControlName="password">
+        </div>
+        <div class="field">
+            <button type = "submit" [disabled]="!log.valid || !log.touched" class="btn btn-success">Zaloguj się</button><br>
+        </div>
+        <div class="field">
+            <p class='warning'>{{ message }}</p>
+        </div>
+        <div class='register'>
+            <p class='info'>Nie masz jeszcze konta? Możesz założyć je <a href='rejestracja'>tutaj</a></p>
+        </div>
+    </form>
+</section>
