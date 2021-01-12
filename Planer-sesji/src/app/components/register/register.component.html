@@ -24,11 +24,15 @@
         </div>
         <div class="field">
             <label>System</label>
-            <input type="text" name="system" class="input" placeholder="Nazwa systemu np. Zew Cthulhu, Warhammer, D&D" formControlName="system" [ngClass]="{'register-submitted': regSubmitted}">
+            <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system'>
+                <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
+            </select>  
         </div>
         <div class="field">
-            <label>Staż (opcjonalny) </label>
-            <input type="text" name="experience" class="input" placeholder="np. 2 lata, 3 miesiące" formControlName="experience" [ngClass]="{'register-submitted': regSubmitted}">
+            <label>Staż w latach</label>
+            <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='experience'>
+                <option *ngFor='let exp of exp' [value]="exp"> {{ exp }}</option>
+            </select>  
         </div>
         <div class="field">
             <button type = "submit" [disabled]="!reg.valid || !reg.touched" class="btn btn-success">Rejestracja</button><br>

@@ -16,7 +16,7 @@ if(isset($postdata) && !empty($postdata))
   //return http_response_code(400);
   //}
 
-    //$experience = $request->experience;
+    $experience = $request->experience;
     $login = $request->login;
     $password = $request->password;
     $system = $request->system;
@@ -25,7 +25,7 @@ if(isset($postdata) && !empty($postdata))
     $price = 0;
     $hashed_password = password_hash('$password', PASSWORD_DEFAULT);
   // Store.
-  $sql = "INSERT INTO mistrzowie (mistrzowie.login,mistrzowie.haslo, mistrzowie.system,mistrzowie.l_poprowadzonych, mistrzowie.imie, mistrzowie.oplata_za_sesje,mistrzowie.email) VALUES ('$login','$hashed_password','$system',0,'$name','$price','$email')";
+  $sql = "INSERT INTO mistrzowie (mistrzowie.login,mistrzowie.haslo, mistrzowie.system,mistrzowie.l_poprowadzonych, mistrzowie.imie, mistrzowie.oplata_za_sesje,mistrzowie.staz,mistrzowie.email) VALUES ('$login','$hashed_password','$system',0,'$name','$price','$experience','$email')";
 
 
   if(mysqli_query($con,$sql))

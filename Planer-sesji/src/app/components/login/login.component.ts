@@ -29,3 +29,5 @@ export class LoginComponent implements OnInit {
       password: new FormControl('')
     })
 }
+
+//201 = ok, 300= błąd
