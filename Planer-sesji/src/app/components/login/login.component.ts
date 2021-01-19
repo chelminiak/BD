@@ -1,6 +1,8 @@
+import { Router, RouteReuseStrategy } from '@angular/router';
+import { PlanService } from 'src/app/plan.service';
+import { Login } from './../../classes';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-login',
@@ -9,9 +11,11 @@ import { HttpClient } from '@angular/common/http'
 })
 export class LoginComponent implements OnInit {
 
-  message: string
+  success: string
+  error: string
+  login: Login
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {  }
+  constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
   ngOnInit() {
     this.log = this.formBuilder.group({
@@ -21,13 +25,23 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(){
-      this.message='ok'
+      this.login = new Login(this.log.value('login').get, this.log.value('password').get)
+      this.planService.log(this.login).subscribe(
+        (res: Login[]) => {
+          this.success = "Logowanie pomyślne"
+        },
+        (err) => this.error = err
+      )
+      this.delay(1000)
+      this.router.navigate['']
     }
     
     log = new FormGroup({
       login: new FormControl(''),
       password: new FormControl('')
     })
-}
 
-//201 = ok, 300= błąd
+    private delay(ms: number){
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+}

@@ -13,7 +13,10 @@
             <button type = "submit" [disabled]="!log.valid || !log.touched" class="btn btn-success">Zaloguj się</button><br>
         </div>
         <div class="field">
-            <p class='warning'>{{ message }}</p>
+            <p class='warning'>{{ error }}</p>
+        </div>
+        <div class="field">
+            <p class='success'>{{ success }}</p>
         </div>
         <div class='register'>
             <p class='info'>Nie masz jeszcze konta? Możesz założyć je <a href='rejestracja'>tutaj</a></p>

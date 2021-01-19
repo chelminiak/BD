@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
+import { Profile } from './../../classes';
+import { PlanService } from 'src/app/plan.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-register',
@@ -9,38 +11,47 @@ import { HttpClient } from '@angular/common/http'
 })
 export class RegisterComponent implements OnInit {
 
-  message: string
+  ok: string
+  error: string
+  profile: Profile
   regSubmitted= false
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {  }
+  constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
   onSubmit(){
-    this.message = ''
+    this.ok = ''
+    this.error = ''
     if (this.reg.valid){
       this.regSubmitted = true
+      this.profile = new Profile(this.reg.value('name').get, this.reg.value('email').get, this.reg.value('password').get, 
+          this.reg.value('name').get, this.reg.value('system').get, this.reg.value('experience').get)
       if (this.reg.get('type').value =='GM'){
-        const options = { headers: { 'Content-Type': 'application/json' } };
-
-        this.http.post<string>("https://g19.labagh.pl/php/register_master.php", JSON.stringify(this.reg.value), options).subscribe(
-          data => console.log(data),
-          error => console.log(error)
-        );
+        this.planService.regGM(this.profile).subscribe(
+          (res: Profile[]) => {
+            this.ok="Zarejestrowano pomyślnie"
+          },
+          (err) => this.error = err
+        )
+        this.delay(5000)
+        this.router.navigate['login']
       } else {
-        const options = { headers: { 'Content-Type': 'application/json' } };
-
-        this.http.post<string>("https://g19.labagh.pl/php/register_player.php", JSON.stringify(this.reg.value), options).subscribe(
-          data => console.log(data),  
-          error => console.log(error)
-        );
+        this.planService.regBG(this.profile).subscribe(
+          (res: Profile[]) => {
+            this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
+          },
+          (err) => this.error = err
+        )
+        this.delay(5000)
+        this.router.navigate['login']
       }
     } else{
-      this.message = "Wypełnij wszystkie wymagane pola!"
+      this.error = "Wypełnij wszystkie wymagane pola!"
     }
   }
 
   ngOnInit() {
     this.reg = this.formBuilder.group({
-      login: [null, [Validators.required, Validators.pattern("[A-Za-z0-9]+$"), Validators.minLength(3)]],
+      login: [null, [Validators.required, Validators.pattern("[a-zA-Z0-9]+$"), Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.pattern("^[a-zA-Z0-9\-\_\.]+\@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z]{2,5}$")]],
       password: [null, [Validators.required, Validators.minLength(8)]],
       type: ['BG', [Validators.required]],
@@ -67,4 +78,7 @@ export class RegisterComponent implements OnInit {
     experience: new FormControl('')
   })
 
+  private delay(ms: number){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 }
