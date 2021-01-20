@@ -3,11 +3,12 @@
  * Returns the list of cars.
  */
 require 'connect.php';
+$data = array();
 
 if(isset($postdata) && !empty($postdata))
 {
   // Extract the data.
-//  $request = json_decode($postdata);
+  $request = json_decode($postdata);
 
   $login = //$request->login;
   $sql = "SELECT id from mistrzowie where mistrzowie.login = '$login'";// pamietaj ze jest masa loginow identycznych aktualnie w bd, testowane dla id-mistrzowie = 3 - zwraca 3 wiersze i testowane dla login= 'acas' 1 wiersz
@@ -28,7 +29,7 @@ if(isset($postdata) && !empty($postdata))
      }
    }
 
-  //$id_mistrzowie = 3;
+  $id_mistrzowie = 27;
   $sql = "SELECT * from lokalizacja where lokalizacja.id_mistrzowie = '$id_mistrzowie'";
   if($result = mysqli_query($con,$sql))
   {
@@ -38,9 +39,12 @@ if(isset($postdata) && !empty($postdata))
       while($row = mysqli_fetch_array($result))
       {
         //echo "cosik";
-        echo $row;
-        echo $row['id'];
+        //echo $row;
+        //echo $row['id'];
+        //echo  $data;
+        $data = $row;
       }
+      echo json_encode($data);//można dać np $data['id'];
     }
   }
   else
