@@ -10,7 +10,7 @@ if(isset($postdata) && !empty($postdata))
   // Extract the data.
   $request = json_decode($postdata);
 
-  $login = //$request->login;
+  $login = $request->login;
   $sql = "SELECT id from mistrzowie where mistrzowie.login = '$login'";// pamietaj ze jest masa loginow identycznych aktualnie w bd, testowane dla id-mistrzowie = 3 - zwraca 3 wiersze i testowane dla login= 'acas' 1 wiersz
 
   if($result = mysqli_query($con,$sql))
