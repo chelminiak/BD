@@ -29,7 +29,7 @@ if(isset($postdata) && !empty($postdata))
      }
    }
 
-  $id_mistrzowie = 27;
+  //$id_mistrzowie = 27;
   $sql = "SELECT * from lokalizacja where lokalizacja.id_mistrzowie = '$id_mistrzowie'";
   if($result = mysqli_query($con,$sql))
   {
