@@ -10,16 +10,16 @@ if(isset($postdata) && !empty($postdata))
   $request = json_decode($postdata);
 
 
-
     $experience = $request->experience;
     $login = $request->login;
     $password = $request->password;
     $system = $request->system;
+    $system2 = $request->system2;
+    $system3 = $request->system3;
     $name = $request->name;
     $email = $request->email;
     $hashed_password = password_hash('$password', PASSWORD_DEFAULT);
- 
-  $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system,gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email) VALUES ('$login','$hashed_password','$system',0,'$name','$experience','$email')";
+  $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system, gracze.system2, gracze.system3, gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$experience','$email')";
 
 
   if(mysqli_query($con,$sql))
