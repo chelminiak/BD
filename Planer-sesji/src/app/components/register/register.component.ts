@@ -19,31 +19,37 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
   onSubmit(){
+    
     this.ok = ''
     this.error = ''
     if (this.reg.valid){
       this.regSubmitted = true
-      this.profile = new Profile(this.reg.value('name').get, this.reg.value('email').get, this.reg.value('password').get, 
-          this.reg.value('name').get, this.reg.value('system').get, this.reg.value('experience').get)
+      this.profile = new Profile(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
+          this.reg.get('name').value, this.reg.get('system').value, this.reg.get('experience').value, 
+          this.reg.get('system2').value, this.reg.get('system3').value)
       if (this.reg.get('type').value =='GM'){
-        this.planService.regGM(this.profile).subscribe(
-          (res: Profile[]) => {
-            this.ok="Zarejestrowano pomyślnie"
-          },
-          (err) => this.error = err
-        )
-        this.delay(5000)
-        this.router.navigate['login']
-      } else {
-        this.planService.regBG(this.profile).subscribe(
-          (res: Profile[]) => {
+        this.planService.regGM(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
+            this.reg.get('name').value, this.reg.get('system').value, 
+            this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value)).subscribe(
+          (res) => {
             this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
           },
           (err) => this.error = err
         )
-        this.delay(5000)
-        this.router.navigate['login']
+      } else {
+        this.planService.regBG(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
+            this.reg.get('name').value, this.reg.get('system').value, 
+            this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value)).subscribe(
+          data => {
+            this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
+            this.delay(5000)
+            this.router.navigate(['login'])
+          },
+          (err) => this.error = err
+        )
       }
+      this.delay(5000)
+      this.router.navigate(['login'])
     } else{
       this.error = "Wypełnij wszystkie wymagane pola!"
     }
@@ -53,10 +59,13 @@ export class RegisterComponent implements OnInit {
     this.reg = this.formBuilder.group({
       login: [null, [Validators.required, Validators.pattern("[a-zA-Z0-9]+$"), Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.pattern("^[a-zA-Z0-9\-\_\.]+\@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z]{2,5}$")]],
-      password: [null, [Validators.required, Validators.minLength(8)]],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(64), 
+        Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]],
       type: ['BG', [Validators.required]],
-      name: [null, [Validators.required, Validators.pattern("[A-Za-zęóąłśżźćńĘÓĄŚŁŻŹĆŃ]+$"), Validators.minLength(3)]],
+      name: [null, [Validators.required, Validators.pattern("[A-Za-z0-9ęóąłśżźćńĘÓĄŚŁŻŹĆŃ]+$"), Validators.minLength(3)]],
       system: [null, [Validators.required]],
+      system2: [null],
+      system3: [null],
       experience: [null, [Validators.required]]
     })
     }
@@ -75,6 +84,8 @@ export class RegisterComponent implements OnInit {
     type: new FormControl(''),
     name: new FormControl(''),
     system: new FormControl(''),
+    system2: new FormControl(''),
+    system3: new FormControl(''),
     experience: new FormControl('')
   })
 

@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(){
-      this.login = new Login(this.log.value('login').get, this.log.value('password').get)
-      this.planService.log(this.login).subscribe(
+      this.login = new Login(this.log.get('login').value, this.log.get('password').value)
+      this.planService.log(this.log.get('login').value, this.log.get('password').value).subscribe(
         (res: Login[]) => {
           this.success = "Logowanie pomyślne"
         },

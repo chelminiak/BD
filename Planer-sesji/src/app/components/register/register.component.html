@@ -12,6 +12,7 @@
         <div class="field">
             <label>Hasło</label>
             <input type="password" name="password" class="input" formControlName="password" [ngClass]="{'register-submitted': regSubmitted}">
+            <p>Hasło musi zawierać przynajmniej jedną małą i dużą literę, cyfrę oraz znak specjalny</p>
         </div>
         <div class="field">
             <h3>Jestem:</h3>
@@ -23,8 +24,20 @@
             <input type="text" name="name" class="input" placeholder="Imię" formControlName="name" [ngClass]="{'register-submitted': regSubmitted}">
         </div>
         <div class="field">
-            <label>System</label>
+            <label>Główny system</label>
             <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system'>
+                <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>System dodatkowy</label>
+            <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system2'>
+                <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>System dodatkowy</label>
+            <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system3'>
                 <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
             </select>  
         </div>
@@ -35,7 +48,7 @@
             </select>  
         </div>
         <div class="field">
-            <button type = "submit" [disabled]="!reg.valid || !reg.touched" class="btn btn-success">Rejestracja</button><br>
+            <button type = "submit" [disabled]="!reg.valid || !reg.touched || regSubmitted" class="btn btn-success">Rejestracja</button><br>
         </div>
         <div class="field">
             <p>{{ error }}</p>

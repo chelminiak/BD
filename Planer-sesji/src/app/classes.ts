@@ -5,7 +5,9 @@ export class Profile{
         password: string,
         name: string,
         system: string,
-        experience: number
+        experience: number,
+        system2?: string,
+        system3?: string,
     ){}
 }
 export class Login{

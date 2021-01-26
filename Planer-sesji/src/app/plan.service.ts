@@ -12,22 +12,20 @@ export class PlanService {
 
   constructor(private http: HttpClient) { 
   }
-  profile: Profile[];
+  res: string
   login: Login[];
-  regGM(profile: Profile): Observable<Profile[]>{
-    return this.http.post("https://g19.labagh.pl/php/register_master.php", { data: profile })
+  regGM(login, email, password, name, system, system2, system3, experience){
+    return this.http.post("https://g19.labagh.pl/php/register_master", { login, email, password, name, system, system2, system3, experience })
     .pipe(map((res)=> {
-      this.profile = res['data'];
-      return this.profile;
+      return res;
     }),
     catchError(this.handleProfileError));
   }
 
-  regBG(profile: Profile): Observable<Profile[]>{
-    return this.http.post("https://g19.labagh.pl/php/register_player.php", { data: profile })
+  regBG(login, email, password, name, system, system2, system3, experience){
+    return this.http.post("https://g19.labagh.pl/php/register_player.php", { login, email, password, name, system, system2, system3, experience })
     .pipe(map((res)=> {
-      this.profile = res['data'];
-      return this.profile;
+      return res;
     }),
     catchError(this.handleProfileError));
   }
@@ -38,13 +36,20 @@ export class PlanService {
     }
   }
 
-  log(login: Login){
-    return this.http.post("https://g19.labagh.pl/php/logon.php", { data: login })
+  log(login, password){
+    return this.http.post("https://g19.labagh.pl/php/logon.php", { login, password })
     .pipe(map((res) => {
       this.login = res['data'];
+      localStorage.setItem('user', JSON.stringify(login));
+      localStorage.setItem('type', res['data'])
       return this.login;
     }),
     catchError(this.handleLoginError));
+  }
+
+  logout(){
+    localStorage.removeItem('user');
+    localStorage.removeItem('type')
   }
 
   handleLoginError(error: HttpErrorResponse){
