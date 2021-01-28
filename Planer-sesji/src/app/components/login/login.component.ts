@@ -13,11 +13,13 @@ export class LoginComponent implements OnInit {
 
   success: string
   error: string
-  login: Login
 
   constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
-  ngOnInit() {
+  ngOnInit() {  
+    if(sessionStorage.getItem('type') == '"master"' || sessionStorage.getItem('type') == '"player"'){
+      this.router.navigate(['/'])
+    }
     this.log = this.formBuilder.group({
       login: [null, [Validators.required]],
       password: [null, [Validators.required]]
@@ -25,15 +27,20 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit(){
-      this.login = new Login(this.log.get('login').value, this.log.get('password').value)
+    this.success = ''
+    this.error = '' 
       this.planService.log(this.log.get('login').value, this.log.get('password').value).subscribe(
-        (res: Login[]) => {
+        data => {
           this.success = "Logowanie pomyślne"
+          setTimeout(()=>
+          {
+            this.router.navigate(['/'])
+            window.location.reload()
+          },
+          1000);
         },
         (err) => this.error = err
       )
-      this.delay(1000)
-      this.router.navigate['']
     }
     
     log = new FormGroup({
@@ -41,7 +48,4 @@ export class LoginComponent implements OnInit {
       password: new FormControl('')
     })
 
-    private delay(ms: number){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
 }

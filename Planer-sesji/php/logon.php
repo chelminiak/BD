@@ -22,19 +22,17 @@ if($result = mysqli_query($con,$sql))
   {
     while($row = mysqli_fetch_assoc($result))
     {
-    //$data[] = $row;
     //echo $row['login'];
     //echo $row['haslo'];
     $hash = $row['haslo'];
     }
-    if (password_verify('$password', '$hash')) {
+    if (password_verify($password,$hash)) {
         http_response_code(201);
-        echo 'player';
+	      echo json_encode('player');
     }
-    else
-    {
+    else{
         echo 'Invalid password.';
-        http_response_code(300);
+        http_response_code(301);
     }
    }
    elseif($result = mysqli_query($con,$sql1))
@@ -45,9 +43,9 @@ if($result = mysqli_query($con,$sql))
        	  {
     	    $hash = $row['haslo'];
     	  }
-     	  if (password_verify('$password', '$hash')) {
+     	  if (password_verify($password, $hash)) {
             http_response_code(201);
-	    echo 'master';
+	          echo json_encode('master');
           } 
           else
           {

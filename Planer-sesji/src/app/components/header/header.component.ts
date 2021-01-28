@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlanService } from 'src/app/plan.service';
 
 @Component({
   selector: 'app-header',
@@ -7,21 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private planService: PlanService) { }
 
   master = false
   player = false
   name: string
 
   ngOnInit() {
-    if(localStorage.getItem('type') == 'master'){
+    localStorage.clear()
+    if(sessionStorage.getItem('type') == '"master"'){
       this.master = true;
-      this.name = localStorage.getItem('user')
+      this.name = sessionStorage.getItem('user')
     }
-    if(localStorage.getItem('type') == 'player'){
+    if(sessionStorage.getItem('type') == '"player"'){
       this.player = true;
-      this.name = localStorage.getItem('user')
+      this.name = sessionStorage.getItem('user')
     }
+  }
+
+  logout(){
+    this.planService.logout()
   }
 
 }

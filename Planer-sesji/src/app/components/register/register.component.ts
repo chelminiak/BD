@@ -15,11 +15,11 @@ export class RegisterComponent implements OnInit {
   error: string
   profile: Profile
   regSubmitted= false
+  disableButton= false
 
   constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
   onSubmit(){
-    
     this.ok = ''
     this.error = ''
     if (this.reg.valid){
@@ -31,10 +31,16 @@ export class RegisterComponent implements OnInit {
         this.planService.regGM(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
             this.reg.get('name').value, this.reg.get('system').value, 
             this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value)).subscribe(
-          (res) => {
+          data => {
             this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
-          },
-          (err) => this.error = err
+            this.disableButton = true
+            setTimeout(()=>
+            {
+              this.router.navigate(['/login'])
+            },
+            1000);
+            },
+          err => this.error = err
         )
       } else {
         this.planService.regBG(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
@@ -42,20 +48,25 @@ export class RegisterComponent implements OnInit {
             this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value)).subscribe(
           data => {
             this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
-            this.delay(5000)
-            this.router.navigate(['login'])
+            this.disableButton = true
+            setTimeout(()=>
+            {
+              this.router.navigate(['/login'])
+            },
+            1000);
           },
-          (err) => this.error = err
+          err => this.error = err
         )
       }
-      this.delay(5000)
-      this.router.navigate(['login'])
     } else{
       this.error = "Wypełnij wszystkie wymagane pola!"
     }
   }
 
   ngOnInit() {
+    if(sessionStorage.getItem('type') == '"master"' || sessionStorage.getItem('type') == '"player"'){
+      this.router.navigate(['/'])
+    }
     this.reg = this.formBuilder.group({
       login: [null, [Validators.required, Validators.pattern("[a-zA-Z0-9]+$"), Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.pattern("^[a-zA-Z0-9\-\_\.]+\@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z]{2,5}$")]],

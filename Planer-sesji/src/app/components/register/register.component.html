@@ -51,10 +51,10 @@
             <button type = "submit" [disabled]="!reg.valid || !reg.touched || regSubmitted" class="btn btn-success">Rejestracja</button><br>
         </div>
         <div class="field">
-            <p>{{ error }}</p>
+            <p class="warning">{{ error }}</p>
         </div>
         <div class="field">
-            <p>{{ ok }}</p>
+            <p class="success">{{ ok }}</p>
         </div>
     </form>
 </section>

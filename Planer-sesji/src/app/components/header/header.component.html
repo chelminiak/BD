@@ -6,15 +6,20 @@
             </a>
         </div>
         <a class="navbar-end">
-            <a class="navbar-item">
+            <a *ngIf ='!master && !player' class="navbar-item" href='login'>
                 <a *ngIf ='!master && !player' href='login'>Zaloguj się</a>
+            </a>
+            <a *ngIf = "master || player" class="navbar-item">
                 <p *ngIf = "master || player">Witaj, {{ name }}</p>
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href='druzyny'>
                 <a href='druzyny'>Moje drużyny</a>
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href='terminy'>
                 <a href='terminy'>Moje terminy</a>
+            </a>
+            <a *ngIf ='master || player' class="navbar-item" href=''>
+                <a *ngIf ='master || player' (click)='logout()'>Wyloguj się</a>
             </a>
         </a>
     </nav>

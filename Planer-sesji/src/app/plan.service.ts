@@ -1,4 +1,3 @@
-import { Profile, Login } from './classes';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -12,20 +11,20 @@ export class PlanService {
 
   constructor(private http: HttpClient) { 
   }
-  res: string
-  login: Login[];
   regGM(login, email, password, name, system, system2, system3, experience){
-    return this.http.post("https://g19.labagh.pl/php/register_master", { login, email, password, name, system, system2, system3, experience })
-    .pipe(map((res)=> {
-      return res;
+    return this.http.post("https://g19.labagh.pl/php/register_master", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
+    .pipe(map((res) => {
+      console.log(res)
+      return res
     }),
     catchError(this.handleProfileError));
   }
 
   regBG(login, email, password, name, system, system2, system3, experience){
-    return this.http.post("https://g19.labagh.pl/php/register_player.php", { login, email, password, name, system, system2, system3, experience })
-    .pipe(map((res)=> {
-      return res;
+    return this.http.post("https://g19.labagh.pl/php/register_player.php", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
+    .pipe(map((res) => {
+      console.log(res)
+      return res
     }),
     catchError(this.handleProfileError));
   }
@@ -39,17 +38,17 @@ export class PlanService {
   log(login, password){
     return this.http.post("https://g19.labagh.pl/php/logon.php", { login, password })
     .pipe(map((res) => {
-      this.login = res['data'];
-      localStorage.setItem('user', JSON.stringify(login));
-      localStorage.setItem('type', res['data'])
-      return this.login;
+      sessionStorage.setItem('user', login);
+      sessionStorage.setItem('type', JSON.stringify(res))
+      return JSON.stringify(res)
     }),
     catchError(this.handleLoginError));
   }
 
   logout(){
-    localStorage.removeItem('user');
-    localStorage.removeItem('type')
+    sessionStorage.removeItem('user')
+    sessionStorage.removeItem('type')
+    window.location.reload()
   }
 
   handleLoginError(error: HttpErrorResponse){
