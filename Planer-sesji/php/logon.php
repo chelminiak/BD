@@ -28,7 +28,7 @@ if($result = mysqli_query($con,$sql))
     }
     if (password_verify($password,$hash)) {
         http_response_code(201);
-	      echo json_encode('player');
+        echo json_encode('player');
     }
     else{
         echo 'Invalid password.';
@@ -36,17 +36,17 @@ if($result = mysqli_query($con,$sql))
     }
    }
    elseif($result = mysqli_query($con,$sql1))
-   {   
+   {
       if (mysqli_num_rows($result) > 0)
       {
           while($row = mysqli_fetch_assoc($result))
-       	  {
-    	    $hash = $row['haslo'];
-    	  }
-     	  if (password_verify($password, $hash)) {
+          {
+            $hash = $row['haslo'];
+          }
+          if (password_verify($password, $hash)) {
             http_response_code(201);
-	          echo json_encode('master');
-          } 
+            echo json_encode('master');
+          }
           else
           {
             echo 'Invalid password.';
@@ -54,7 +54,7 @@ if($result = mysqli_query($con,$sql))
           }
        }
     }
-      
+
 
 }
 
@@ -63,5 +63,3 @@ else
   http_response_code(404);
 }
 }
-
-//echo json_encode($data);
