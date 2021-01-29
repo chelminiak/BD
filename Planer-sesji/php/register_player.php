@@ -7,9 +7,7 @@ $postdata = file_get_contents("php://input");
 if(isset($postdata) && !empty($postdata))
 {
   // Extract the data.
-  $request = json_decode($postdata);
-
-
+    $request = json_decode($postdata);
     $experience = $request->experience;
     $login = $request->login;
     $password = $request->password;
@@ -18,18 +16,29 @@ if(isset($postdata) && !empty($postdata))
     $system3 = $request->system3;
     $name = $request->name;
     $email = $request->email;
-    $hashed_password = password_hash('$password', PASSWORD_DEFAULT);
-  $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system, gracze.system2, gracze.system3, gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$experience','$email')";
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+    $sql = "SELECT * from gracze, mistrzowie where gracze.login = '$login' OR mistrzowie.login = '$login'";
 
-  if(mysqli_query($con,$sql))
-  {
-    http_response_code(201);
-    echo "Records inserted successfully.";
-  }
-  else
-  {
-    http_response_code(422);
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
-  }
+    if($result = mysqli_query($con,$sql))
+    {
+      if (mysqli_num_rows($result) == 0)
+      {
+        $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system, gracze.system2, gracze.system3, gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$experience','$email')";
+
+        if(mysqli_query($con,$sql))
+        {
+          http_response_code(201);
+          echo "Records inserted successfully.";
+        }
+        else
+        {
+          http_response_code(422);
+          echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        }
+       }
+       else{
+          http_response_code(423);
+       }
+    }
 }
