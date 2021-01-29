@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { Profile } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +12,6 @@ export class RegisterComponent implements OnInit {
 
   ok: string
   error: string
-  profile: Profile
   regSubmitted= false
   disableButton= false
 
@@ -24,9 +22,6 @@ export class RegisterComponent implements OnInit {
     this.error = ''
     if (this.reg.valid){
       this.regSubmitted = true
-      this.profile = new Profile(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
-          this.reg.get('name').value, this.reg.get('system').value, this.reg.get('experience').value, 
-          this.reg.get('system2').value, this.reg.get('system3').value)
       if (this.reg.get('type').value =='GM'){
         this.planService.regGM(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
             this.reg.get('name').value, this.reg.get('system').value, 

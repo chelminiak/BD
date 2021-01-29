@@ -1,6 +1,5 @@
 import { Router, RouteReuseStrategy } from '@angular/router';
 import { PlanService } from 'src/app/plan.service';
-import { Login } from './../../classes';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.success = ''
     this.error = '' 
       this.planService.log(this.log.get('login').value, this.log.get('password').value).subscribe(
-        data => {
+        (data) => {
           this.success = "Logowanie pomyślne"
           setTimeout(()=>
           {

@@ -12,11 +12,14 @@
             <a *ngIf = "master || player" class="navbar-item">
                 <p *ngIf = "master || player">Witaj, {{ name }}</p>
             </a>
-            <a class="navbar-item" href='druzyny'>
-                <a href='druzyny'>Moje drużyny</a>
+            <a *ngIf = "master || player" class="navbar-item" href='druzyny'>
+                <a *ngIf = "master || player" href='druzyny'>Moje drużyny</a>
             </a>
-            <a class="navbar-item" href='terminy'>
-                <a href='terminy'>Moje terminy</a>
+            <a *ngIf = "master || player" class="navbar-item" href='terminy'>
+                <a *ngIf = "master || player" href='terminy'>Moje terminy</a>
+            </a>
+            <a *ngIf = "master" class="navbar-item" href='miejsca'>
+                <a *ngIf = "master" href='miejsca'>Moje miejsca</a>
             </a>
             <a *ngIf ='master || player' class="navbar-item" href=''>
                 <a *ngIf ='master || player' (click)='logout()'>Wyloguj się</a>

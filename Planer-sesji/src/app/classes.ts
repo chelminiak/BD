@@ -1,18 +1,21 @@
-export class Profile{
+import { Time } from "@angular/common";
+
+export class Place {
     constructor(
-        login: string,
-        email: string,
-        password: string,
-        name: string,
-        system: string,
-        experience: number,
-        system2?: string,
-        system3?: string,
-    ){}
+    id: number,
+    address: string,
+    city: string,
+    max: number,
+    kitchen: number,
+    type: string,
+    floor: number,
+    elevator: number){}
 }
-export class Login{
+
+export class Term {
     constructor(
-        login: string,
-        password: string
-    ){}
+    system: string,
+    start: Time,
+    end: Time,
+    availability: number){}
 }

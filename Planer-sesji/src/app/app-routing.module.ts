@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PlaceComponent } from './components/place/place.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'terminy',
     component: TermComponent
+  },
+  {
+    path: 'miejsca',
+    component: PlaceComponent
   },
   { 
     path: '**',

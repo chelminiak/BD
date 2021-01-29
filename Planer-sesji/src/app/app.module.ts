@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { TermComponent } from './components/term/term.component';
 import { TeamComponent } from './components/team/team.component';
+import { PlaceComponent } from './components/place/place.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TeamComponent } from './components/team/team.component';
     RegisterComponent,
     LoginComponent,
     TermComponent,
-    TeamComponent
+    TeamComponent,
+    PlaceComponent,
   ],
   imports: [
     BrowserModule,

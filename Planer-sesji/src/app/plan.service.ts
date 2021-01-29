@@ -1,3 +1,4 @@
+import { Place, Term } from './classes';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -9,10 +10,13 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class PlanService {
 
+  places: Place[];
+  terms: Term[];
+
   constructor(private http: HttpClient) { 
   }
   regGM(login, email, password, name, system, system2, system3, experience){
-    return this.http.post("https://g19.labagh.pl/php/register_master", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
+    return this.http.post("https://g19.labagh.pl/php/register_master.php", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
     .pipe(map((res) => {
       console.log(res)
       return res
@@ -53,5 +57,29 @@ export class PlanService {
 
   handleLoginError(error: HttpErrorResponse){
       return throwError('Nieprawidłowa nazwa użytkownika lub hasło!')
+  }
+
+  getPlaces(login){
+    return this.http.post("https://g19.labagh.pl/php/get_place.php", login)
+    .pipe(map((res: Place[]) => {
+      console.log(res);
+      this.places = res;
+      return this.places;    
+    }),
+    catchError(this.handleGetError));
+  }
+
+  getTerms(login){
+    return this.http.post("https://g19.labagh.pl/php/get_termin.php", login)
+    .pipe(map((res: Term[]) => {
+      console.log(res);
+      this.terms = res;
+      return this.terms;    
+    }),
+    catchError(this.handleGetError));
+  }
+
+  handleGetError(error: HttpErrorResponse){
+    return throwError('Wystąpił błąd. Proszę spróbować później')
   }
 }
