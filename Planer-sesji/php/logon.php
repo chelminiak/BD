@@ -13,19 +13,21 @@ if(isset($postdata) && !empty($postdata))
     $login = $request->login;
     $password = $request->password;
 
-$sql = "SELECT haslo from gracze where gracze.login = '$login'";
-$sql1 = "SELECT haslo from mistrzowie where mistrzowie.login = '$login'";
+$sql = "SELECT haslo from gracze where gracze.login =?";
+$sql1 = "SELECT haslo from mistrzowie where mistrzowie.login =?";
 
-if($result = mysqli_query($con,$sql))
+if($stmt = mysqli_prepare($con,$sql))
 {
-  if (mysqli_num_rows($result) > 0)
+  mysqli_stmt_bind_param($stmt, "s", $login);
+  mysqli_stmt_bind_result($stmt, $hash);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_store_result($stmt);
+
+  if (mysqli_stmt_num_rows($stmt) > 0)
   {
-    while($row = mysqli_fetch_assoc($result))
-    {
-    //echo $row['login'];
-    //echo $row['haslo'];
-    $hash = $row['haslo'];
-    }
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
     if (password_verify($password,$hash)) {
         http_response_code(201);
         echo json_encode('player');
@@ -35,14 +37,18 @@ if($result = mysqli_query($con,$sql))
         http_response_code(301);
     }
    }
-   elseif($result = mysqli_query($con,$sql1))
+   elseif($stmt = mysqli_prepare($con,$sql1))
    {
-      if (mysqli_num_rows($result) > 0)
+      mysqli_stmt_bind_param($stmt, "s", $login);
+      mysqli_stmt_bind_result($stmt, $hash);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_store_result($stmt);
+
+      if (mysqli_stmt_num_rows($stmt) > 0)
       {
-          while($row = mysqli_fetch_assoc($result))
-          {
-            $hash = $row['haslo'];
-          }
+          mysqli_stmt_fetch($stmt);
+          mysqli_stmt_close($stmt);
+
           if (password_verify($password, $hash)) {
             http_response_code(201);
             echo json_encode('master');
@@ -54,7 +60,6 @@ if($result = mysqli_query($con,$sql))
           }
        }
     }
-
 
 }
 
