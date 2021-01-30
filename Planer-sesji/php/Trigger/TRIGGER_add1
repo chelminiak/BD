@@ -1,0 +1,10 @@
+DELIMITER //
+CREATE TRIGGER after_termin_add1
+AFTER INSERT ON termin FOR EACH ROW  
+BEGIN 
+UPDATE mistrzowie SET mistrzowie.l_poprowadzonych = mistrzowie.l_poprowadzonych + 1 WHERE mistrzowie.id = NEW.id_mistrzowie;
+UPDATE druzyna SET druzyna.l_odbytych_sesji = druzyna.l_odbytych_sesji + 1  WHERE druzyna.id = NEW.id_druzyna;
+UPDATE gracze SET gracze.l_odbytych_sesji = gracze.l_odbytych_sesji + 1 WHERE gracze.id_druzyna = NEW.id_druzyna;
+END;
+//
+DELIMITER ;
