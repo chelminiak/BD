@@ -1,1 +1,29 @@
-<p>{{error}}</p>
+<section>
+    <p>{{error}}</p>
+    <mat-card *ngFor='let place of places'>
+        <mat-card-header>
+            <mat-card-title>{{place.adres}}</mat-card-title>
+            <mat-card-subtitle>{{place.miasto}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Maksymalna liczba osób: {{place.max_liczba_osob}}</p><br>
+            <p *ngIf='place.dostep_kuchni'>Dostęp do kuchni: TAK</p>
+            <p *ngIf='!place.dostep_kuchni'>Dostęp do kuchni: NIE</p><br>
+            <p>Rodzaj miejsca: {{place.rodzaj_miejsca}}</p><br>
+            <p>Piętro: {{place.pietro}}</p><br>
+            <p *ngIf='place.czy_winda'>Winda: TAK</p>
+            <p *ngIf='!place.czy_winda'>Winda: NIE</p><br>
+        </mat-card-content>
+        <!---<mat-card-actions align="start">
+            <button mat-button (click)="onAction1">Action1</button>
+            
+        </mat-card-actions>--->
+    </mat-card>
+    <mat-card class='addition'>
+        <a><mat-card-title class="add" (click)='addPlace()'>Dodaj nowe miejsce</mat-card-title></a>
+        <mat-card-subtitle><br></mat-card-subtitle>
+        <mat-card-content>
+            <br><br><br><br><br>
+        </mat-card-content>
+    </mat-card>
+</section>

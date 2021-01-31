@@ -10,8 +10,6 @@ import { Component, OnInit } from '@angular/core';
 export class PlaceComponent implements OnInit {
 
   places: Place[];
-  place1: Place
-  place2: Place;
   error = '';
 
   constructor(private planService: PlanService) { }
@@ -23,18 +21,17 @@ export class PlaceComponent implements OnInit {
   getPlaces(){
     this.error = '';
     this.planService.getPlaces(sessionStorage.getItem('user')).subscribe(
-      (places: Place[]) => {
-        this.place1 = new Place(1, "add", "City", 4, 0, "type", 1, 0),
-        this.place2 = new Place(1, "add", "City", 4, 0, "type", 1, 0),
-        this.places = [this.place1, this.place2]
-        console.log(this.place1)
-        console.log(this.place2)
-        console.log(this.places)
+      (res: Place[]) => {
+        this.places = res
       },
       (err) => {
         this.error = err
       }
     )
+  }
+
+  addPlace(){
+    console.log("Wstrzymaj konie kowboju, zajmiemy się tym wkrótce")
   }
 
 }

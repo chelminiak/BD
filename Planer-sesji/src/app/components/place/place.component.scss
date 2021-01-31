@@ -1,0 +1,25 @@
+section{
+    width: 100vw;
+}
+
+mat-card{
+    background-color: lightyellow;
+    display: inline-block;
+    width: 28vw;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    border-width: 10px;
+}
+
+.addition{
+    height: inherit;
+    align-items: stretch;
+}
+
+.add{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

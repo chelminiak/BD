@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.scss",
               "./node_modules/bulma/css/bulma.css"
             ],
             "scripts": []
@@ -82,6 +83,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Planer-sesji"
 }

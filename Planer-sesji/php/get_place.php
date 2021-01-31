@@ -1,10 +1,7 @@
 <?php
-/**
- * Returns the list of cars.
- */
 require 'connect.php';
 $data = array();
-
+$postdata = file_get_contents("php://input");
 if(isset($postdata) && !empty($postdata))
 {
   // Extract the data.
@@ -38,13 +35,10 @@ if(isset($postdata) && !empty($postdata))
       $cr = 0;
       while($row = mysqli_fetch_array($result))
       {
-        //echo "cosik";
-        //echo $row;
-        //echo $row['id'];
-        //echo  $data;
-        $data = $row;
+        $data[$cr] = $row;
+	      $cr++;
       }
-      echo json_encode($data);//można dać np $data['id'];
+      echo json_encode(['data'=>$data]);//można dać np $data['id'];
     }
   }
   else

@@ -1,5 +1,5 @@
 import { Place, Term } from './classes';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
@@ -12,6 +12,9 @@ export class PlanService {
 
   places: Place[];
   terms: Term[];
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) { 
   }
@@ -60,26 +63,29 @@ export class PlanService {
   }
 
   getPlaces(login){
-    return this.http.post("https://g19.labagh.pl/php/get_place.php", login)
-    .pipe(map((res: Place[]) => {
-      console.log(res);
-      this.places = res;
-      return this.places;    
+    return this.http.post("https://g19.labagh.pl/php/get_place.php", { login })
+    .pipe(map((data) => {
+      this.places = data['data']
+      return this.places
     }),
     catchError(this.handleGetError));
   }
 
   getTerms(login){
-    return this.http.post("https://g19.labagh.pl/php/get_termin.php", login)
-    .pipe(map((res: Term[]) => {
-      console.log(res);
-      this.terms = res;
+    return this.http.post("https://g19.labagh.pl/php/get_termin.php", { login })
+    .pipe(map((res) => {
+      console.log(res)
+      console.log(JSON.stringify(res));
       return this.terms;    
     }),
     catchError(this.handleGetError));
   }
 
   handleGetError(error: HttpErrorResponse){
-    return throwError('Wystąpił błąd. Proszę spróbować później')
+    if(error.status == 404){
+      return throwError('Nie znaleziono miejsc, stworzonych przez ciebie')
+    } else{
+      return throwError('Wystąpił błąd. Proszę spróbować później')
+    }
   }
 }

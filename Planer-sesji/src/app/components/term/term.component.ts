@@ -23,7 +23,6 @@ export class TermComponent implements OnInit {
     this.error = '';
     this.planService.getTerms(sessionStorage.getItem('user')).subscribe(
       (res: Term[]) => {
-        console.log(res)
         this.terms = res
       },
       (err) => {

@@ -11,7 +11,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { TermComponent } from './components/term/term.component';
 import { TeamComponent } from './components/team/team.component';
-import { PlaceComponent } from './components/place/place.component'
+import { PlaceComponent } from './components/place/place.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { PlaceComponent } from './components/place/place.component'
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
