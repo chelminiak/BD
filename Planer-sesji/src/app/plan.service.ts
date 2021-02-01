@@ -21,7 +21,6 @@ export class PlanService {
   regGM(login, email, password, name, system, system2, system3, experience){
     return this.http.post("https://g19.labagh.pl/php/register_master.php", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
     .pipe(map((res) => {
-      console.log(res)
       return res
     }),
     catchError(this.handleProfileError));
@@ -30,7 +29,6 @@ export class PlanService {
   regBG(login, email, password, name, system, system2, system3, experience){
     return this.http.post("https://g19.labagh.pl/php/register_player.php", { login, email, password, name, system, system2, system3, experience }, {responseType: 'text'})
     .pipe(map((res) => {
-      console.log(res)
       return res
     }),
     catchError(this.handleProfileError));
@@ -68,17 +66,32 @@ export class PlanService {
       this.places = data['data']
       return this.places
     }),
-    catchError(this.handleGetError));
+    catchError(this.handleGetError))
+  }
+
+  delPlace(login, id){
+    return this.http.post("https://g19.labagh.pl/php/del_place.php", { login, id })
+    .pipe(map((data)=> {
+      return data
+    }),
+    catchError(this.handleDelError))
   }
 
   getTerms(login){
     return this.http.post("https://g19.labagh.pl/php/get_termin.php", { login })
-    .pipe(map((res) => {
-      console.log(res)
-      console.log(JSON.stringify(res));
+    .pipe(map((data) => {
+      this.terms = data['data']
       return this.terms;    
     }),
     catchError(this.handleGetError));
+  }
+
+  delTerms(login, id){
+    return this.http.post("https://g19.labagh.pl/php/del_termin.php", { login, id })
+    .pipe(map((data)=> {
+      return data
+    }),
+    catchError(this.handleDelError))
   }
 
   handleGetError(error: HttpErrorResponse){
@@ -86,6 +99,14 @@ export class PlanService {
       return throwError('Nie znaleziono miejsc, stworzonych przez ciebie')
     } else{
       return throwError('Wystąpił błąd. Proszę spróbować później')
+    }
+  }
+
+  handleDelError(error: HttpErrorResponse){
+    if(error.status == 430){
+      return throwError('Nie znaleziono loginu w bazie!')
+    } else {
+      return throwError('Nie udało się usunąć wspazanego wpisu')
     }
   }
 }

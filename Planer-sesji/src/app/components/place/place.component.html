@@ -1,6 +1,6 @@
 <section>
-    <p>{{error}}</p>
-    <mat-card *ngFor='let place of places'>
+    <p class='err'>{{error}}</p>
+    <mat-card class='card' *ngFor='let place of places'>
         <mat-card-header>
             <mat-card-title>{{place.adres}}</mat-card-title>
             <mat-card-subtitle>{{place.miasto}}</mat-card-subtitle>
@@ -14,16 +14,12 @@
             <p *ngIf='place.czy_winda'>Winda: TAK</p>
             <p *ngIf='!place.czy_winda'>Winda: NIE</p><br>
         </mat-card-content>
-        <!---<mat-card-actions align="start">
-            <button mat-button (click)="onAction1">Action1</button>
+        <mat-card-actions align="start">
+            <button mat-button (click)="delPlace(place.id)">Usuń</button>
             
-        </mat-card-actions>--->
+        </mat-card-actions>
     </mat-card>
-    <mat-card class='addition'>
+    <mat-card class='addition' (click)='addPlace()'>
         <a><mat-card-title class="add" (click)='addPlace()'>Dodaj nowe miejsce</mat-card-title></a>
-        <mat-card-subtitle><br></mat-card-subtitle>
-        <mat-card-content>
-            <br><br><br><br><br>
-        </mat-card-content>
     </mat-card>
 </section>

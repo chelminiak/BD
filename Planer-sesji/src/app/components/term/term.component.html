@@ -1,1 +1,21 @@
-<p>{{error}}</p>
+<section>
+    <p class='err'>{{error}}</p>
+    <mat-card class='card' *ngFor='let item of terms'>
+        <mat-card-header>
+            <mat-card-title>{{item.system}}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Lokalizacja: {{item.id_lokalizacja}}</p><br>
+            <p>Czas rozpoczęcia: {{item.czas_start | date:'short':'+0100'}}</p><br>
+            <p>Czas zakończenia: {{item.czas_stop | date:'short':'+0100'}}</p><br>
+        </mat-card-content>
+        <mat-card-actions align="start">
+            <button mat-button (click)="delTerm(item.id)">Usuń</button>
+            
+        </mat-card-actions>
+    </mat-card>
+    <mat-card class='addition' (click)='addTerm()'>
+        <a><mat-card-title class="add" (click)='addTerm()'>Dodaj nowy termin</mat-card-title></a>
+    </mat-card>
+</section>

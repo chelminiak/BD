@@ -31,4 +31,19 @@ export class TermComponent implements OnInit {
     )
   }
 
+  delTerm(id){
+    this.planService.delTerms(sessionStorage.getItem('user'), id).subscribe(
+      (res) => {
+        this.getTerms()
+      },
+      (err) => {
+        this.error = err
+      }
+    )
+  }
+
+  addTerm(){
+    
+  }
+
 }

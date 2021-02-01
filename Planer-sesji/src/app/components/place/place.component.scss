@@ -5,21 +5,30 @@ section{
 mat-card{
     background-color: lightyellow;
     display: inline-block;
-    width: 28vw;
+    overflow: auto;
+    width: 20vw;
     margin-left: 2.5vw;
     margin-right: 2.5vw;
     margin-top: 2vh;
     margin-bottom: 2vh;
-    border-width: 10px;
+    border-width: 5px;
 }
 
 .addition{
-    height: inherit;
+    width: 90vw;
+    margin-left: 5vw;
     align-items: stretch;
+    align-items: center;
+    justify-content: center;
+    border-width: 5px;
 }
 
 .add{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.err{
+    color: red;
 }

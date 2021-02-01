@@ -34,4 +34,15 @@ export class PlaceComponent implements OnInit {
     console.log("Wstrzymaj konie kowboju, zajmiemy się tym wkrótce")
   }
 
+  delPlace(id){
+    this.planService.delPlace(sessionStorage.getItem('user'), id).subscribe(
+      (res) => {
+        this.getPlaces()
+      },
+      (err) => {
+        this.error = err
+      }
+    )
+  }
+
 }
