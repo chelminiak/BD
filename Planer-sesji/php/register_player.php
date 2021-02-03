@@ -16,6 +16,7 @@ if(isset($postdata) && !empty($postdata))
     $system3 = $request->system3;
     $name = $request->name;
     $email = $request->email;
+    $city = $request->city;
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     $sql = "SELECT * from gracze, mistrzowie where gracze.login = '$login' OR mistrzowie.login = '$login'";
@@ -24,7 +25,7 @@ if(isset($postdata) && !empty($postdata))
     {
       if (mysqli_num_rows($result) == 0)
       {
-        $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system, gracze.system2, gracze.system3, gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$experience','$email')";
+        $sql = "INSERT INTO gracze (gracze.login,gracze.haslo, gracze.system, gracze.system2, gracze.system3, gracze.l_odbytych_sesji, gracze.imie,gracze.staz,gracze.email,gracze.miasto) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$experience','$email','$city')";
 
         if(mysqli_query($con,$sql))
         {
