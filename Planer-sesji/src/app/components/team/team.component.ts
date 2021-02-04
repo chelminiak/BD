@@ -1,3 +1,5 @@
+import { Team, Master } from './../../classes';
+import { PlanService } from 'src/app/plan.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamComponent implements OnInit {
 
-  constructor() { }
+  error = ''
+  teams: Team[]
+
+  constructor(private planService: PlanService) { }
 
   ngOnInit() {
+    this.getTeams()
+  }
+
+  getTeams(){
+    this.error = '';
+    this.planService.getTeams(sessionStorage.getItem('user')).subscribe(
+      (res: Team[]) => {
+        this.teams = res
+        for (let item of this.teams){
+          this.planService.resolveMaster(item.id_mistrzowie).subscribe(
+            (res: Master) => {
+              item.mistrz = res
+            }
+          )
+        }
+      },
+      (err) => {
+        this.error = err
+      }
+    )
+  }
+
+  delTeam(id){
+    this.planService.delTeam(sessionStorage.getItem('user'), id).subscribe(
+      (res) => {
+        window.location.reload()
+      },
+      (err) => {
+        this.error = err
+      }
+    )
+  }
+
+  addTeam(){
+
   }
 
 }

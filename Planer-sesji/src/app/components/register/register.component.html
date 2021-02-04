@@ -30,13 +30,13 @@
             </select>  
         </div>
         <div class="field">
-            <label>System dodatkowy</label>
+            <label>System dodatkowy (opcjonalny)</label>
             <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system2'>
                 <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
             </select>  
         </div>
         <div class="field">
-            <label>System dodatkowy</label>
+            <label>System dodatkowy (opcjonalny)</label>
             <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='system3'>
                 <option *ngFor='let sys of sys' [value]="sys"> {{ sys }}</option>
             </select>  
@@ -45,6 +45,12 @@
             <label>Staż w latach</label>
             <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='experience'>
                 <option *ngFor='let exp of exp' [value]="exp"> {{ exp }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Miasto</label>
+            <select class='input' [ngClass]="{'register-submitted': regSubmitted}" formControlName='city'>
+                <option *ngFor='let city of city' [value]="city"> {{ city }}</option>
             </select>  
         </div>
         <div class="field">

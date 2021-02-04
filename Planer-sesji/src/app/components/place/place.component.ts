@@ -37,7 +37,7 @@ export class PlaceComponent implements OnInit {
   delPlace(id){
     this.planService.delPlace(sessionStorage.getItem('user'), id).subscribe(
       (res) => {
-        this.getPlaces()
+        window.location.reload()
       },
       (err) => {
         this.error = err

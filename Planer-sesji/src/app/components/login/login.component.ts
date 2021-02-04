@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/'])
     }
     this.log = this.formBuilder.group({
-      login: [null, [Validators.required]],
-      password: [null, [Validators.required]]
+      login: [null, [Validators.required, Validators.pattern("[a-zA-Z0-9]+$"), Validators.minLength(3)]],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(64), 
+        Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]]
     })
     }
 

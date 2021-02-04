@@ -1,3 +1,30 @@
 <section>
-    <img src="/assets/druzyna.jpg"/>
+    <div>
+        <h2>Moje drużyny</h2>
+    </div>
+    <div>
+        <p class='err'><br>{{error}}</p>
+    </div>
+    <mat-card class='card' *ngFor='let item of teams'>
+        <mat-card-header>
+            <mat-card-title>Mistrz gry: {{item.mistrz.imie}}, {{item.mistrz.imie}}</mat-card-title>
+            <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p *ngIf='item.nazwa'>Nazwa drużyny: {{item.nazwa}}</p><br>
+            <p>Miasto: {{item.mistrz.miasto}}</p>
+            <p>Liczba członków: {{item.l_czlonkow}}</p><br>
+            <p>Maksymalna liczba członków: {{item.max_l_czlonkow}}</p><br>
+            <p>Liczba odbytych sesji: {{item.l_odbytych_sesji}}</p><br>
+            <p>Minimalny staż gracza: {{item.mistrz.minimalny_staz_gracza}}</p>
+            <p>Opłata za sesję: {{item.mistrz.oplata_za_sesje}}</p>
+        </mat-card-content>
+        <mat-card-actions align="start">
+            <button mat-button (click)="delTeam(item.id)">Usuń</button>
+            
+        </mat-card-actions>
+    </mat-card>
+    <mat-card class='addition' (click)='addTeam()'>
+        <a><mat-card-title class="add" (click)='addTeam()'>Dodaj nową drużynę</mat-card-title></a>
+    </mat-card>
 </section>

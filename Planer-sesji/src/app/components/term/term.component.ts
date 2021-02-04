@@ -1,4 +1,4 @@
-import { Term } from './../../classes';
+import { Term, Master, Team, Place, Player } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 export class TermComponent implements OnInit {
 
   error='';
-  terms: Term[]
-
+  terms: Term[];
+  team = true;
 
   constructor(private planService: PlanService) { }
 
@@ -24,6 +24,34 @@ export class TermComponent implements OnInit {
     this.planService.getTerms(sessionStorage.getItem('user')).subscribe(
       (res: Term[]) => {
         this.terms = res
+        for (let item of this.terms){
+          this.planService.resolveMaster(item.id_mistrzowie).subscribe(
+            (res: Master) => {
+              item.mistrz = res
+            }
+          )
+          this.planService.resolvePlace(item.id_lokalizacja).subscribe(
+            (res: Place) => {
+              item.lokalizacja = res
+            }
+          )
+          if(item.id_druzyna){
+            this.planService.resolveTeam(item.id_lokalizacja).subscribe(
+              (res: Team) => {
+                item.druzyna = res
+              }
+            ),
+            (err) => {
+              this.team = false
+            }
+            this.planService.resolvePlayers(item.id_druzyna).subscribe(
+              (res: Player[]) => {
+                item.gracze = res
+              }
+            ),
+            (err) => {}
+          }
+        }
       },
       (err) => {
         this.error = err
@@ -32,9 +60,9 @@ export class TermComponent implements OnInit {
   }
 
   delTerm(id){
-    this.planService.delTerms(sessionStorage.getItem('user'), id).subscribe(
+    this.planService.delTerm(sessionStorage.getItem('user'), id).subscribe(
       (res) => {
-        this.getTerms()
+        window.location.reload()
       },
       (err) => {
         this.error = err

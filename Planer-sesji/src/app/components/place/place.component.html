@@ -1,5 +1,10 @@
 <section>
-    <p class='err'>{{error}}</p>
+    <div>
+        <h2>Moje miejsca</h2>
+    </div>
+    <div>
+        <p class='err'><br>{{error}}</p>
+    </div>
     <mat-card class='card' *ngFor='let place of places'>
         <mat-card-header>
             <mat-card-title>{{place.adres}}</mat-card-title>
