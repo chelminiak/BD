@@ -7,7 +7,7 @@ if(isset($postdata) && !empty($postdata))
   // Extract the data.
   $request = json_decode($postdata);
 
-  $login= //$request->login;
+  $login= $request->login;
   $sql = "SELECT t.* from termin t,gracze g,druzyna d where (d.id = g.id_druzyna OR  d.id = g.id_druzyna2 OR d.id = g.id_druzyna3 OR d.id = g.id_druzyna4) AND d.id IS NOT NULL AND t.id_druzyna = d.id AND g.login =?";
   if($stmt = mysqli_prepare($con,$sql))
   {
