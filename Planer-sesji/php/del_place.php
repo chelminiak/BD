@@ -7,8 +7,8 @@ if(isset($postdata) && !empty($postdata))
   // Extract the data.
   $request = json_decode($postdata);
 
-  $login = 'woodeem';//$request->login;
-  $id = 21;//$request->id;
+  $login = $request->login;
+  $id = $request->id;
 
   $sql = "SELECT id from mistrzowie where mistrzowie.login = ?";
   if($stmt = mysqli_prepare($con,$sql))
