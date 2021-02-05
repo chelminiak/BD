@@ -38,14 +38,20 @@ if(isset($postdata) && !empty($postdata))
               mysqli_stmt_close($stmt);
               echo json_encode(['data'=>$data]);
            }
+           else
+           {  
+              http_response_code(420);//gracz nie istnieje lub bledny login
+           }
         }
-
+        else
+        {
+           http_response_code(404);
+        }
      }
    }
    else
-   { 
+   {
       http_response_code(404);
    }
 }
-
 
