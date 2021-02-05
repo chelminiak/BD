@@ -1,53 +1,53 @@
 <?php
 
 require 'connect.php';
+$postdata = file_get_contents("php://input");
 if(isset($postdata) && !empty($postdata))
 {
   // Extract the data.
   $request = json_decode($postdata);
 
   $login = $request->login;
-  $id = $request->id;//id terminu
-  $sql = "SELECT id from mistrzowie where mistrzowie.login = '$login'";// pamietaj ze jest masa loginow identycznych aktualnie w bd, testowane dla id-mistrzowie = 3 - zwraca 3 wiersze i testowane dla login= 'acas' 1 wiersz
+  $id = $request->id;
 
-  if($result = mysqli_query($con,$sql))
+  $sql = "SELECT id from mistrzowie where mistrzowie.login = ?";
+  if($stmt = mysqli_prepare($con,$sql))
   {
-    if (mysqli_num_rows($result) > 0)
-    {
-      while($row = mysqli_fetch_assoc($result))
-      {
-        $id_mistrzowie = $row['id'];
-      }
+     mysqli_stmt_bind_param($stmt, "s",  $login);
+     mysqli_stmt_bind_result($stmt, $id_mistrzowie);
+     mysqli_stmt_execute($stmt);
+     mysqli_stmt_store_result($stmt);
+     if (mysqli_stmt_num_rows($stmt) > 0)
+     {
+         mysqli_stmt_fetch($stmt);
+         mysqli_stmt_close($stmt);
      }
      else
      {
         http_response_code(430);
      }
-   }
-  // Extract, validate and sanitize the id.
-//      $id_mistrzowie = 3;
-//      $id = 4;
-  if(!$id)
-  {
-    return http_response_code(400);
   }
+
   // Delete.
-  $sql = "DELETE FROM termin WHERE termin.id = '$id' AND termin.id_mistrzowie = '$id_mistrzowie'";
+  
+  $sql = "DELETE FROM termin WHERE termin.id = ? AND termin.id_mistrzowie = '$id_mistrzowie'";
 
   if($stmt = mysqli_prepare($con, $sql))
   {
+    mysqli_stmt_bind_param($stmt, "i",  $id);
     mysqli_stmt_execute($stmt);
     if(mysqli_stmt_affected_rows($stmt) > 0)
     {
         http_response_code(204);
     }
     else
-    {
-      return http_response_code(423);
+    {    
+       http_response_code(423);// brak wykonania zapytania - rozne przyczyny, m.in sql err
     }
+     mysqli_stmt_close($stmt);
   }
   else
   {
-       return http_response_code(422);
+     http_response_code(422);
   }
 }
