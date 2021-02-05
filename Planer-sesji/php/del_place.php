@@ -47,7 +47,7 @@ if(isset($postdata) && !empty($postdata))
        }
        else
        {
-          return http_response_code(423);// brak wykonania zapytania - rone przyczyny, m.in sql err
+          return http_response_code(423);// brak wykonania zapytania - rozne przyczyny, m.in sql err
        }
     }
      mysqli_stmt_close($stmt);
