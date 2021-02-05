@@ -49,19 +49,13 @@ export class Team{
     system: string;
     l_odbytych_sesji: number;
     nazwa: string;
-    czy_nazwa = false;
     constructor(
         id: number,
         id_mistrzowie: number,
         l_czlonkow: number,
         max_l_czlonkow: number,
         system: string,
-        l_odbytych_sesji: number,
-        nazwa: string){
-            if(nazwa){
-                this.czy_nazwa = true;
-            }
-        }
+        l_odbytych_sesji: number){}
 }
 
 export class Master{
@@ -139,4 +133,7 @@ export class Data{
     "Elbląg", "Wałbrzych", "Włocławek", "Tarnów", "Chorzów", "Koszalin", "Kalisz", "Legnica", "Grudziądz" ,"Jaworzno" ,"Słupsk",
     "Jastrzębie-Zdrój", "Nowy Sącz", "Jelenia Góra", "Siedlce", "Mysłowice", "Konin", "Piła", "Piotrków Trybunalski", "Inowrocław",
     "Lubin", "Ostrów Wielkopolski", "Suwałki"]
+    max = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    floor = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+    placetype = ['akademik', 'bar/pub', 'dom', 'działka', 'mieszkanie']
 }

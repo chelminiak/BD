@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Term, Master, Team, Place, Player } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ export class TermComponent implements OnInit {
   terms: Term[];
   team = true;
 
-  constructor(private planService: PlanService) { }
+  constructor(private planService: PlanService, private router: Router) { }
 
   ngOnInit() {
     this.getTerms();
@@ -71,7 +72,7 @@ export class TermComponent implements OnInit {
   }
 
   addTerm(){
-    
+    this.router.navigate(['/dodaj_termin'])
   }
 
 }

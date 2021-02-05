@@ -7,17 +7,17 @@
     </div>
     <mat-card class='card' *ngFor='let item of teams'>
         <mat-card-header>
-            <mat-card-title>Mistrz gry: {{item.mistrz.imie}}, {{item.mistrz.imie}}</mat-card-title>
+            <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
             <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <p *ngIf='item.nazwa'>Nazwa drużyny: {{item.nazwa}}</p><br>
-            <p>Miasto: {{item.mistrz.miasto}}</p>
+            <p *ngIf='item.nazwa'>Nazwa drużyny: {{item?.nazwa}}</p><br>
+            <p>Miasto: {{item.mistrz?.miasto}}</p>
             <p>Liczba członków: {{item.l_czlonkow}}</p><br>
             <p>Maksymalna liczba członków: {{item.max_l_czlonkow}}</p><br>
             <p>Liczba odbytych sesji: {{item.l_odbytych_sesji}}</p><br>
-            <p>Minimalny staż gracza: {{item.mistrz.minimalny_staz_gracza}}</p>
-            <p>Opłata za sesję: {{item.mistrz.oplata_za_sesje}}</p>
+            <p>Minimalny staż gracza: {{item.mistrz?.minimalny_staz_gracza}}</p>
+            <p>Opłata za sesję: {{item.mistrz?.oplata_za_sesje}}</p>
         </mat-card-content>
         <mat-card-actions align="start">
             <button mat-button (click)="delTeam(item.id)">Usuń</button>

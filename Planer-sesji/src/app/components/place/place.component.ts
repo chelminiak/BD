@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Place } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ export class PlaceComponent implements OnInit {
   places: Place[];
   error = '';
 
-  constructor(private planService: PlanService) { }
+  constructor(private planService: PlanService, private router: Router) { }
 
   ngOnInit() {
     this.getPlaces();
@@ -31,7 +32,7 @@ export class PlaceComponent implements OnInit {
   }
 
   addPlace(){
-    console.log("Wstrzymaj konie kowboju, zajmiemy się tym wkrótce")
+    this.router.navigate(['/dodaj_miejsce'])
   }
 
   delPlace(id){

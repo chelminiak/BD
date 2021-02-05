@@ -1,0 +1,51 @@
+<section>
+    <form (ngSubmit)="onSubmit()" [formGroup] = "addplace">
+        <h2>Dodaj nowe miejsce</h2>
+        <div class="field">
+            <label>Adres</label>
+            <input type="text" name="address" class="input" placeholder="Adres" formControlName="address"  [ngClass]="{'addplace-submitted': addplaceSubmitted}">
+        </div>
+        <div class="field">
+            <label>Miasto</label>
+            <select class='input' [ngClass]="{'addplace-submitted': addplaceSubmitted}" formControlName='city'>
+                <option *ngFor='let item of city' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Maksymalna liczba graczy</label>
+            <select class='input' [ngClass]="{'addplace-submitted': addplaceSubmitted}" formControlName='max_people'>
+                <option *ngFor='let item of max' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <h3>Dostęp do kuchni</h3>
+                <input type="radio" name="kitchen" value="Yes" formControlName="kitchen" /> Tak
+                <input type="radio" name="kitchen" value="No" formControlName="kitchen" checked /> Nie <br>
+        </div>
+        <div class="field">
+            <label>Rodzaj miejsca</label>
+            <select class='input' [ngClass]="{'addplace-submitted': addplaceSubmitted}" formControlName='type'>
+                <option *ngFor='let item of type' [value]="item"> {{ item }}</option>
+            </select>          </div>
+        <div class="field">
+            <label>Piętro</label>
+            <select class='input' [ngClass]="{'addplace-submitted': addplaceSubmitted}" formControlName='floor'>
+                <option *ngFor='let item of floor' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <h3>Winda</h3>
+                <input type="radio" name="elevator" value="Yes" formControlName="elevator" /> Tak
+                <input type="radio" name="elevator" value="No" formControlName="elevator" checked /> Nie <br>
+        </div>
+        <div class="field">
+            <button type = "submit" [disabled]="!addplace.valid || !addplace.touched || addplaceSubmitted" class="btn btn-success">Dodaj miejsce</button><br>
+        </div>
+        <div class="field">
+            <p class="warning">{{ error }}</p>
+        </div>
+        <div class="field">
+            <p class="success">{{ ok }}</p>
+        </div>
+    </form>
+</section>

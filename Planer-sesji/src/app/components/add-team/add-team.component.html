@@ -1,0 +1,36 @@
+<section>
+    <form (ngSubmit)="onSubmit()" [formGroup] = "addteam">
+        <h2>Dodaj nową drużynę</h2>
+        <div class="field">
+            <label>Maksymalna liczba graczy</label>
+            <select class='input' [ngClass]="{'addteam-submitted': addteamSubmitted}" formControlName='max_people'>
+                <option *ngFor='let item of max' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>System</label>
+            <select class='input' [ngClass]="{'addteam-submitted': addteamSubmitted}" formControlName='system'>
+                <option *ngFor='let item of system' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Liczba odbytych dotychczas sesji</label>
+            <select class='input' [ngClass]="{'addteam-submitted': addteamSubmitted}" formControlName='num_sessions'>
+                <option *ngFor='let item of sessions' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Nazwa (opcjonalna)</label>
+            <input type="text" name="name" class="input" placeholder="Nazwa drużyny" formControlName="name" [ngClass]="{'addteam-submitted': addteamSubmitted}">
+        </div>
+        <div class="field">
+            <button type = "submit" [disabled]="!addteam.valid || !addteam.touched || addteamSubmitted" class="btn btn-success">Dodaj drużynę</button><br>
+        </div>
+        <div class="field">
+            <p class="warning">{{ error }}</p>
+        </div>
+        <div class="field">
+            <p class="success">{{ ok }}</p>
+        </div>
+    </form>
+</section>

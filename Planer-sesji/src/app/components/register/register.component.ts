@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
   error: string
   data = new Data
   regSubmitted= false
-  disableButton= false
 
   constructor(private formBuilder: FormBuilder, private planService: PlanService, private router: Router) {  }
 
@@ -23,15 +22,14 @@ export class RegisterComponent implements OnInit {
     this.ok = ''
     this.error = ''
     if (this.reg.valid){
-      this.regSubmitted = true
       if (this.reg.get('type').value =='GM'){
         this.planService.regGM(this.reg.get('login').value, this.reg.get('email').value, this.reg.get('password').value, 
             this.reg.get('name').value, this.reg.get('system').value, 
             this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value),
             this.reg.get('city').value).subscribe(
           data => {
+            this.regSubmitted = true
             this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
-            this.disableButton = true
             setTimeout(()=>
             {
               this.router.navigate(['/login'])
@@ -46,8 +44,8 @@ export class RegisterComponent implements OnInit {
             this.reg.get('system2').value, this.reg.get('system3').value, Number(this.reg.get('experience').value),
             this.reg.get('city').value).subscribe(
           data => {
+            this.regSubmitted = true
             this.ok="Zarejestrowano pomyślnie. Za chwilę nastąpi przekierowanie do strony logowania"
-            this.disableButton = true
             setTimeout(()=>
             {
               this.router.navigate(['/login'])
@@ -77,12 +75,12 @@ export class RegisterComponent implements OnInit {
       system2: [null],
       system3: [null],
       experience: [null, [Validators.required]],
-      city: [null, [Validators.required, Validators.pattern("[A-Za-z\- ęóąłśżźćńĘÓĄŚŁŻŹĆŃ]+$")]]
+      city: [null, [Validators.required]]
     })
     }
   exp = this.data.experience
   sys = this.data.system;
-  city = this.data.cities;
+  city = this.data.cities.sort();
 
   reg = new FormGroup({
     login: new FormControl(''),
@@ -96,8 +94,4 @@ export class RegisterComponent implements OnInit {
     city: new FormControl(''),
     experience: new FormControl('')
   })
-
-  private delay(ms: number){
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Team, Master } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ export class TeamComponent implements OnInit {
   error = ''
   teams: Team[]
 
-  constructor(private planService: PlanService) { }
+  constructor(private planService: PlanService, private router: Router) { }
 
   ngOnInit() {
     this.getTeams()
@@ -49,7 +50,7 @@ export class TeamComponent implements OnInit {
   }
 
   addTeam(){
-
+    this.router.navigate(['/dodaj_druzyne'])
   }
 
 }

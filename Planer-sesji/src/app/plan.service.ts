@@ -82,6 +82,15 @@ export class PlanService {
     catchError(this.handleDelError))
   }
 
+  addPlace(login, address, city, max_people, kitchen, type, floor, elevator){
+    return this.http.post("https://g19.labagh.pl/php/add_place.php", { login, address, city, max_people, kitchen, type, floor, elevator }, {responseType: 'text'})
+    .pipe(map((data) => {
+      return data
+    }),
+    catchError(this.handleAddError)
+    )
+  }
+
   getTerms(login){
     return this.http.post("https://g19.labagh.pl/php/get_termin.php", { login })
     .pipe(map((data) => {
@@ -99,6 +108,15 @@ export class PlanService {
     catchError(this.handleDelError))
   }
 
+  addTerm(login, id, system, start, stop){
+    return this.http.post("https://g19.labagh.pl/php/add_termin.php", { login, id, system, start, stop }, {responseType: 'text'})
+    .pipe(map((data) => {
+      return data
+    }),
+    catchError(this.handleAddError)
+    )
+  }
+
   getTeams(login){
     return this.http.post("https://g19.labagh.pl/php/get_team.php", { login })
     .pipe(map((data) => {
@@ -114,6 +132,15 @@ export class PlanService {
       return data
     }),
     catchError(this.handleDelError))
+  }
+
+  addTeam(login, max_people, system, num_sessions, name){
+    return this.http.post("https://g19.labagh.pl/php/add_team.php", { login, max_people, system, num_sessions, name }, {responseType: 'text'})
+    .pipe(map((data) => {
+      return data
+    }),
+    catchError(this.handleAddError)
+    )
   }
 
   resolveMaster(id){
@@ -158,7 +185,7 @@ export class PlanService {
     } else if (error.status == 430) {
       return throwError('Wystąpił błąd. Proszę spróbować później')
     } else{
-      return throwError('Nie znaleziono wpsiów, skojarzonych z twoim loginem')
+      return throwError('Nie znaleziono wpisów, skojarzonych z twoim loginem')
     }
   }
 
@@ -167,7 +194,15 @@ export class PlanService {
       return throwError('Nie znaleziono loginu w bazie!')
     } else if(error.status == 423 || error.status == 422){
       return throwError('Nie udało się usunąć wskazanego wpisu')
+    } else if(error.status == 450){
+      return throwError('Przed usunięciem miejsca usuń wszystkie terminy, skojarzone z wybranem miejscem')
     }
+  }
+
+  handleAddError(error: HttpErrorResponse){
+    if(error.status == 422){
+      return throwError('Wystąpił błąd. Proszę spróbować później')
+    }else{}
   }
 
   handleResolverError(error: HttpErrorResponse){

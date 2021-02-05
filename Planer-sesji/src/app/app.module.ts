@@ -14,6 +14,9 @@ import { TeamComponent } from './components/team/team.component';
 import { PlaceComponent } from './components/place/place.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatCardModule } from '@angular/material/card';
+import { AddPlaceComponent } from './components/add-place/add-place.component';
+import { AddTeamComponent } from './components/add-team/add-team.component';
+import { AddTermComponent } from './components/add-term/add-term.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +28,17 @@ import { MatCardModule } from '@angular/material/card';
     TermComponent,
     TeamComponent,
     PlaceComponent,
+    AddPlaceComponent,
+    AddTeamComponent,
+    AddTermComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatCardModule,
     BrowserAnimationsModule,
-    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,14 +7,14 @@
     </div>
     <mat-card class='card' *ngFor='let item of terms'>
         <mat-card-header>
-            <mat-card-title>Mistrz gry: {{item.mistrz.login}}, {{item.mistrz.imie}}</mat-card-title>
+            <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
             <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <p>Lokalizacja: {{item.lokalizacja.adres}}, {{item.lokalizacja.miasto}}</p><br>
-            <p *ngIf='team'>Drużyna: {{item.druzyna.nazwa}}</p><br>
+            <p>Lokalizacja: {{item.lokalizacja?.adres}}, {{item.lokalizacja?.miasto}}</p><br>
+            <p *ngIf='team'>Drużyna: {{item.druzyna?.nazwa}}</p><br>
             <p>Członkowie drużyny:</p>
-            <p *ngFor='let pl of item.gracze'>{{pl.login}}, {{pl.imie}}</p><br>
+            <p *ngFor='let pl of item.gracze'>{{pl?.login}}, {{pl?.imie}}</p><br>
             <p>Czas rozpoczęcia: {{item.czas_start | date:'short':'+0100'}}</p><br>
             <p>Czas zakończenia: {{item.czas_stop | date:'short':'+0100'}}</p><br>
         </mat-card-content>

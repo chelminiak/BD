@@ -1,0 +1,35 @@
+<section>
+    <form (ngSubmit)="onSubmit()" [formGroup] = "addterm">
+        <h2>Dodaj nowy termin</h2>
+        <div class="field">
+            <label>Lokalizacja</label>
+            <select class='input' [ngClass]="{'addterm-submitted': addtermSubmitted}" formControlName='id'>
+                <option *ngFor='let item of places' [value]="item.id"> {{ item.adres }}, {{item.miasto}}</option>
+            </select>  
+            <p>Przed dodaniem nowego terminu upewnij się, że stworzyłeś co najmniej 1 lokalizację!</p>
+        </div>
+        <div class="field">
+            <label>System</label>
+            <select class='input' [ngClass]="{'addterm-submitted': addtermSubmitted}" formControlName='system'>
+                <option *ngFor='let item of system' [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Data początku</label>
+            <input type="datetime-local" name="start" class="input" formControlName="start" [ngClass]="{'addterm-submitted': addtermSubmitted}">
+        </div>
+        <div class="field">
+            <label>Data końca</label>
+            <input type="datetime-local" name="stop" class="input" formControlName="stop" min='this.addterm.get("start").value' [ngClass]="{'addterm-submitted': addtermSubmitted}">
+        </div>
+        <div class="field">
+            <button type = "submit" [disabled]="!addterm.valid || !addterm.touched || addtermSubmitted" class="btn btn-success">Dodaj drużynę</button><br>
+        </div>
+        <div class="field">
+            <p class="warning">{{ error }}</p>
+        </div>
+        <div class="field">
+            <p class="success">{{ ok }}</p>
+        </div>
+    </form>
+</section>
