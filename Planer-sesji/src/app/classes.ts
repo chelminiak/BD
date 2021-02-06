@@ -4,9 +4,11 @@ export class Place {
     miasto: string;
     max_liczba_osob: number;
     dostep_kuchni: number;
+    kuchnia: boolean;
     rodzaj_miejsca: string;
     pietro: number;
-    czy_winda: number
+    czy_winda: number;
+    winda: boolean;
     constructor(
         id: number,
         adres: string,
@@ -15,7 +17,18 @@ export class Place {
         dostep_kuchni: number,
         rodzaj_miejsca: string,
         pietro: number,
-        czy_winda: number){}
+        czy_winda: number){
+            if(dostep_kuchni == 0){
+                this.kuchnia = false
+            } else{
+                this.kuchnia = true
+            }
+            if(czy_winda == 0){
+                this.winda = false
+            } else{
+                this.winda = true
+            }
+        }
 }
 
 export class Term {
@@ -30,6 +43,7 @@ export class Term {
     system: string;
     czas_start: Date;
     czas_stop: Date;
+    aktualny: boolean;
     constructor(
         id: number,
         id_druzyna: number,

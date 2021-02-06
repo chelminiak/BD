@@ -49,24 +49,33 @@ export class AddTermComponent implements OnInit {
     this.ok = ''
     this.error = ''
     if (this.addterm.valid){
-      for (let item of this.places){
-        if(item.id == Number(this.addterm.get('id').value)){
-          this.id = item.id
+      if(Date.parse(this.addterm.get('start').value) < Date.parse(this.addterm.get('stop').value)){
+        for (let item of this.places){
+          if(item.id == Number(this.addterm.get('id').value)){
+            this.id = item.id
+          }
         }
+        this.planService.addTerm(sessionStorage.getItem('user'), this.id, this.addterm.get('system').value, 
+          this.addterm.get('start').value, this.addterm.get('stop').value).subscribe(
+            data => {
+              this.addtermSubmitted = true
+              this.ok="Termin dodany pomyślnie. Za chwilę nastąpi przekierowanie do listy twoich terminów"
+              setTimeout(()=>
+              {
+                this.router.navigate(['/terminy'])
+              },
+              1000);
+              },
+            err => this.error = err
+          )
+      } else{
+        this.error = 'Data końca nie może być wcześniejsza, niż data początku!'
+        setTimeout(()=>
+              {
+                this.error = ''
+              },
+              1000);
       }
-      this.planService.addTerm(sessionStorage.getItem('user'), this.id, this.addterm.get('system').value, 
-        this.addterm.get('start').value, this.addterm.get('stop').value).subscribe(
-          data => {
-            this.addtermSubmitted = true
-            this.ok="Termin dodany pomyślnie. Za chwilę nastąpi przekierowanie do listy twoich terminów"
-            setTimeout(()=>
-            {
-              this.router.navigate(['/terminy'])
-            },
-            1000);
-            },
-          err => this.error = err
-        )
     }
   }
 

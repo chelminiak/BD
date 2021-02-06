@@ -16,6 +16,7 @@ export class PlanService {
   teams: Team[];
   team: Team;
   players: Player[];
+  player: Player;
   master: Master;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -71,7 +72,7 @@ export class PlanService {
       this.places = data['data']
       return this.places
     }),
-    catchError(this.handleGetError))
+    catchError(this.handleGetPlaceError))
   }
 
   delPlace(login, id){
@@ -97,7 +98,16 @@ export class PlanService {
       this.terms = data['data']
       return this.terms;    
     }),
-    catchError(this.handleGetError));
+    catchError(this.handleGetTermError));
+  }
+
+  getPlayerTerms(login){
+    return this.http.post("https://g19.labagh.pl/php/get_termin_p.php", { login })
+    .pipe(map((data) => {
+      this.terms = data['data']
+      return this.terms;    
+    }),
+    catchError(this.handlePlayerGetTermError));
   }
 
   delTerm(login, id){
@@ -123,7 +133,33 @@ export class PlanService {
       this.teams = data['data']
       return this.teams;    
     }),
-    catchError(this.handleGetError));
+    catchError(this.handleGetTeamError))
+  }
+
+  getPlayerTeams(login){
+    return this.http.post("https://g19.labagh.pl/php/get_team_p.php", { login })
+    .pipe(map((data) => {
+      this.teams = data['data']
+      return this.teams;    
+    }),
+    catchError(this.handlePlayerGetTeamError));
+  }
+
+  getPossibleTeams(login){
+    return this.http.post("https://g19.labagh.pl/php/searcher.php", { login })
+    .pipe(map((data) => {
+      this.teams = data['data']
+      return this.teams;    
+    }),
+    catchError(this.handleSearchError));
+  }
+
+  joinTeam(login, id){
+    return this.http.post("https://g19.labagh.pl/php/add_to_team.php", { login, id })
+    .pipe(map((data)=> {
+      return data
+    }),
+    catchError(this.handleJoinError))
   }
 
   delTeam(login, id){
@@ -179,7 +215,7 @@ export class PlanService {
     catchError(this.handleResolverError))
   }
 
-  handleGetError(error: HttpErrorResponse){
+  handleGetPlaceError(error: HttpErrorResponse){
     if(error.status == 404){
       return throwError('Nie znaleziono miejsc, stworzonych przez ciebie')
     } else if (error.status == 430) {
@@ -187,6 +223,46 @@ export class PlanService {
     } else{
       return throwError('Nie znaleziono wpisów, skojarzonych z twoim loginem')
     }
+  }
+
+  handleGetTeamError(error: HttpErrorResponse){
+    if(error.status == 404){
+      return throwError('Nie znaleziono drużyn, stworzonych przez ciebie')
+    } else if (error.status == 430) {
+      return throwError('Wystąpił błąd. Proszę spróbować później')
+    } else{
+      return throwError('Nie znaleziono wpisów, skojarzonych z twoim loginem')
+    }
+  }
+
+  handleGetTermError(error: HttpErrorResponse){
+    if(error.status == 404){
+      return throwError('Nie znaleziono terminów, stworzonych przez ciebie')
+    } else if (error.status == 430) {
+      return throwError('Wystąpił błąd. Proszę spróbować później')
+    } else{
+      return throwError('Nie znaleziono wpisów, skojarzonych z twoim loginem')
+    }
+  }
+
+  handlePlayerGetTeamError(error:HttpErrorResponse){
+    if(error.status == 420){
+      return throwError('Wygląda na to, że nie należysz jeszcze do żadnej drużyn. Śmiało, znajdź jakąś poniżej')
+    }
+  }
+
+  handlePlayerGetTermError(error:HttpErrorResponse){
+    if(error.status == 420){
+      return throwError('Wygląda na to, że twoja drużyna nie zapisała się na żaden termin. Sprawdź czy mistrzowie twoich drużyn nie dodali jakiegoś nowego')
+    }
+  }
+
+  handleSearchError(error: HttpErrorResponse){
+    return throwError('Nie znaleziono wpisów, które mogłyby cię zainteresować')
+  }
+
+  handleJoinError(error: HttpErrorResponse){
+    return throwError('Nie udało się dołączyć do wybranego zespołu. Proszę spróbować później')
   }
 
   handleDelError(error: HttpErrorResponse){
@@ -207,5 +283,27 @@ export class PlanService {
 
   handleResolverError(error: HttpErrorResponse){
     return throwError("Nie znaleziono odpowiedniego rekordu w bazie!")
+  }
+
+  getPlayer(login){
+    return this.http.post("https://g19.labagh.pl/php/get_profile.php", { login })
+    .pipe(map((data) => {
+      this.player = data['data']
+      return this.player;    
+    }),
+    catchError(this.handleGetProfileError));
+  }
+
+  getMaster(login){
+    return this.http.post("https://g19.labagh.pl/php/get_profile.php", { login })
+    .pipe(map((data) => {
+      this.master = data['data']
+      return this.master;    
+    }),
+    catchError(this.handleGetProfileError));
+  }
+
+  handleGetProfileError(error: HttpErrorResponse){
+      return throwError('Nie znaleziono podanego loginu w bazie!')
   }
 }

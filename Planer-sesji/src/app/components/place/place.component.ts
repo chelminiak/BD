@@ -16,7 +16,11 @@ export class PlaceComponent implements OnInit {
   constructor(private planService: PlanService, private router: Router) { }
 
   ngOnInit() {
-    this.getPlaces();
+    if(sessionStorage.getItem('type') == '"master"'){
+      this.getPlaces();
+    } else{
+      this.router.navigate(['/'])
+    }
   }
 
   getPlaces(){

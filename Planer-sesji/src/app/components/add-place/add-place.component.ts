@@ -56,6 +56,8 @@ export class AddPlaceComponent implements OnInit {
     this.ok = ''
     this.error = ''
     if (this.addplace.valid){
+      console.log(this.addplace.get('kitchen').value)
+      console.log(this.addplace.get('elevator').value)
       if(this.addplace.get('kitchen').value == "Yes"){
         this.ifkitchen = 1
       }
@@ -63,8 +65,8 @@ export class AddPlaceComponent implements OnInit {
         this.ifelevator = 1
       }
       this.planService.addPlace(sessionStorage.getItem('user'), this.addplace.get('address').value, this.addplace.get('city').value, 
-        this.addplace.get('max_people').value, this.ifkitchen, this.addplace.get('type').value, this.addplace.get('floor').value,
-        this.ifelevator).subscribe(
+        this.addplace.get('max_people').value, Number(this.ifkitchen), this.addplace.get('type').value, this.addplace.get('floor').value,
+        Number(this.ifelevator)).subscribe(
           data => {
             this.addplaceSubmitted = true
             this.ok="Miejsce dodane pomyślnie. Za chwilę nastąpi przekierowanie do listy twoich miejsc"

@@ -23,7 +23,7 @@
             <input type="datetime-local" name="stop" class="input" formControlName="stop" min='this.addterm.get("start").value' [ngClass]="{'addterm-submitted': addtermSubmitted}">
         </div>
         <div class="field">
-            <button type = "submit" [disabled]="!addterm.valid || !addterm.touched || addtermSubmitted" class="btn btn-success">Dodaj drużynę</button><br>
+            <button type = "submit" [disabled]="!addterm.valid || !addterm.touched || addtermSubmitted" class="btn btn-success">Dodaj termin</button><br>
         </div>
         <div class="field">
             <p class="warning">{{ error }}</p>

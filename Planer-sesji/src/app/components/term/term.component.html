@@ -5,25 +5,48 @@
     <div>
         <p class='err'><br>{{error}}</p>
     </div>
-    <mat-card class='card' *ngFor='let item of terms'>
-        <mat-card-header>
-            <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
-            <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <p>Lokalizacja: {{item.lokalizacja?.adres}}, {{item.lokalizacja?.miasto}}</p><br>
-            <p *ngIf='team'>Drużyna: {{item.druzyna?.nazwa}}</p><br>
-            <p>Członkowie drużyny:</p>
-            <p *ngFor='let pl of item.gracze'>{{pl?.login}}, {{pl?.imie}}</p><br>
-            <p>Czas rozpoczęcia: {{item.czas_start | date:'short':'+0100'}}</p><br>
-            <p>Czas zakończenia: {{item.czas_stop | date:'short':'+0100'}}</p><br>
-        </mat-card-content>
-        <mat-card-actions align="start">
-            <button mat-button (click)="delTerm(item.id)">Usuń</button>
-            
-        </mat-card-actions>
-    </mat-card>
-    <mat-card class='addition' (click)='addTerm()'>
-        <a><mat-card-title class="add" (click)='addTerm()'>Dodaj nowy termin</mat-card-title></a>
-    </mat-card>
+    <div>
+        <mat-card class='card' *ngFor='let item of terms'>
+            <mat-card-header>
+                <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
+                <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Lokalizacja: {{item.lokalizacja?.adres}}, {{item.lokalizacja?.miasto}}</p><br>
+                <p *ngIf='team'>Drużyna: {{item.druzyna?.nazwa}}</p><br>
+                <p>Członkowie drużyny:</p>
+                <p *ngFor='let pl of item.gracze'>{{pl?.login}}, {{pl?.imie}}</p><br>
+                <p>Czas rozpoczęcia: {{item.czas_start | date:'dd/mm/yyyy':'+0100'}}</p><br>
+                <p>Czas zakończenia: {{item.czas_stop | date:'dd/mm/yyyy':'+0100'}}</p><br>
+            </mat-card-content>
+            <mat-card-actions align="start" *ngIf='master'>
+                <button mat-button (click)="delTerm(item.id)">Usuń</button>            
+            </mat-card-actions>
+        </mat-card>
+        <mat-card class='addition' *ngIf='master' (click)='addTerm()'>
+            <a><mat-card-title class="add" (click)='addTerm()'>Dodaj nowy termin</mat-card-title></a>
+        </mat-card>
+    </div>
+    <div>
+        <h2>Terminy, które możesz wybrać</h2>
+    </div>
+    <div>
+        <p class='err'><br>{{search_error}}</p>
+    </div>
+    <!--<div>
+        <mat-card class='card' *ngFor='let item of possible'>
+            <mat-card-header>
+                <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
+                <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Lokalizacja: {{item.lokalizacja?.adres}}, {{item.lokalizacja?.miasto}}</p><br>
+                <p>Czas rozpoczęcia: {{item.czas_start | date:'dd/mm/yyyy':'+0100'}}</p><br>
+                <p>Czas zakończenia: {{item.czas_stop | date:'dd/mm/yyyy':'+0100'}}</p><br>
+            </mat-card-content>
+            <mat-card-actions align="start">
+                <button mat-button (click)="chooseTerm(item.id)">Usuń</button>            
+            </mat-card-actions>
+        </mat-card>
+    </div>-->
 </section>
