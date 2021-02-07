@@ -21,6 +21,9 @@
             <a *ngIf = "master" class="navbar-item" href='miejsca'>
                 <a *ngIf = "master" href='miejsca'>Moje miejsca</a>
             </a>
+            <a *ngIf = "master || player" class="navbar-item" href='miejsca'>
+                <a *ngIf = "master || player" href='profil'>Mój profil</a>
+            </a>
             <a *ngIf ='master || player' class="navbar-item" href=''>
                 <a *ngIf ='master || player' (click)='logout()'>Wyloguj się</a>
             </a>

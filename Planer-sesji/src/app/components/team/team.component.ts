@@ -32,6 +32,7 @@ export class TeamComponent implements OnInit {
             if(this.prof.id_druzyna && this.prof.id_druzyna2 && this.prof.id_druzyna3 && this.prof.id_druzyna4){
               this.search = false
             }
+            console.log(this.search)
           },
           (err) => {}
         )

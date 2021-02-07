@@ -17,6 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
 import { AddTeamComponent } from './components/add-team/add-team.component';
 import { AddTermComponent } from './components/add-term/add-term.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MatSelectModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { AddTermComponent } from './components/add-term/add-term.component';
     AddPlaceComponent,
     AddTeamComponent,
     AddTermComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { AddTermComponent } from './components/add-term/add-term.component';
     HttpClientModule,
     MatCardModule,
     BrowserAnimationsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

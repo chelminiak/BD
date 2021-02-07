@@ -1,0 +1,105 @@
+<section>
+    <form (ngSubmit)="onSubmit()" [formGroup] = "prof">
+        <h2>Mój profil</h2>
+        <div class="field">
+            <label>Login:</label>
+            <p *ngIf='master'>{{profilem?.login}}</p>
+            <p *ngIf='player'>{{profilep?.login}}</p>
+        </div>
+        <div class="field">
+            <label>Adres e-mail:</label>
+            <p *ngIf='master'>{{profilem?.email}}</p>
+            <input *ngIf='master&&edit' type="text" name="email" class="input" formControlName="email" value={{profilem?.email}} [ngClass]="{'prof-submitted': profSubmitted}">
+            <p *ngIf='player'>{{profilep?.email}}</p>
+            <input *ngIf='player&&edit' type="text" name="email" class="input" formControlName="email" value={{profilep?.email}} [ngClass]="{'prof-submitted': profSubmitted}">
+        </div>
+        <div class="field">
+            <label>Imię:</label>
+            <p *ngIf='master&&!edit'>{{profilem?.imie}}</p>
+            <input *ngIf='master&&edit' type="text" name="name" class="input" value={{profilem?.imie}} formControlName="name" [ngClass]="{'prof-submitted': profSubmitted}">
+            <p *ngIf='player&&!edit'>{{profilep?.imie}}</p>
+            <input *ngIf='player&&edit' type="text" name="name" class="input" value={{profilep?.imie}} formControlName="name" [ngClass]="{'prof-submitted': profSubmitted}">
+        </div>
+        <div class="field">
+            <label>Główny system:</label>
+            <p *ngIf='master&&!edit'>{{profilem?.system}}</p>
+            <select *ngIf='master&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system'>
+                <option *ngFor='let sys of sys' value=profilem?.system [value]="sys"> {{ sys }}</option>
+            </select>  
+            <p *ngIf='player&&!edit'>{{profilep?.system}}</p>
+            <select *ngIf='player&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system'>
+                <option *ngFor='let sys of sys' value=profilep?.system [value]="sys"> {{ sys }}</option>
+            </select> 
+        </div>
+        <div class="field">
+            <label>System dodatkowy (opcjonalny):</label>
+            <p *ngIf='master&&!edit'>{{profilem?.system2 || 'Nie zdefiniowano'}}</p>
+            <select *ngIf='master&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system2'>
+                <option *ngFor='let item of sys' value=profilem?.system2 [value]="item"> {{ item }}</option>
+            </select>  
+            <p *ngIf='player&&!edit'>{{profilep?.system2 || 'Nie zdefiniowano'}}</p>
+            <select *ngIf='player&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system2'>
+                <option *ngFor='let item of sys' value=profilep?.system2 [value]="item"> {{ item }}</option>
+            </select> 
+        </div>
+        <div class="field">
+            <label>System dodatkowy (opcjonalny):</label>
+            <p *ngIf='master&&!edit'>{{profilem?.system3 || 'Nie zdefiniowano'}}</p>
+            <select *ngIf='master&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system3'>
+                <option *ngFor='let system of sys' value=profilem?.system3 [value]="system"> {{ system }}</option>
+            </select>  
+            <p *ngIf='player&&!edit'>{{profilep?.system3 || 'Nie zdefiniowano'}}</p>
+            <select *ngIf='player&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='system3'>
+                <option *ngFor='let system of sys' value=profilep?.system3 [value]="system"> {{ system }}</option>
+            </select> 
+        </div>
+        <div class="field">
+            <label>Staż w latach:</label>
+            <p *ngIf='master&&!edit'>{{profilem?.staz}}</p>
+            <select *ngIf='master&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='experience'>
+                <option *ngFor='let exp of exp' value=profilem?.staz [value]="exp"> {{ exp }}</option>
+            </select>  
+            <p *ngIf='player&&!edit'>{{profilep?.staz}}</p>
+            <select *ngIf='player&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='experience'>
+                <option *ngFor='let exp of exp' value=profilep?.staz [value]="exp"> {{ exp }}</option>
+            </select>
+        </div>
+        <div *ngIf='master' class="field">
+            <label>Opłata za sesję:</label>
+            <p *ngIf='!edit'>{{profilem?.oplata_za_sesje}}</p>
+            <select *ngIf='edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='money'>
+                <option *ngFor='let item of exp' value=profilem?.oplata_za_sesje [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div *ngIf='master' class="field">
+            <label>Minimalny staż gracza:</label>
+            <p *ngIf='!edit'>{{profilem?.minimalny_staz_gracza}}</p>
+            <select *ngIf='edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='min'>
+                <option *ngFor='let item of exp' value=profilem?.minimalny_staz_gracza [value]="item"> {{ item }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <label>Miasto:</label>
+            <p *ngIf='master&&!edit'>{{profilem?.miasto}}</p>
+            <select *ngIf='master&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='city'>
+                <option *ngFor='let city of city' value=profilem?.miasto [value]="city"> {{ city }}</option>
+            </select>  
+            <p *ngIf='player&&!edit'>{{profilep?.miasto}}</p>
+            <select *ngIf='player&&edit' class='input' [ngClass]="{'prof-submitted': profSubmitted}" formControlName='city'>
+                <option *ngFor='let city of city' value=profilep?.miasto [value]="city"> {{ city }}</option>
+            </select>  
+        </div>
+        <div class="field">
+            <button *ngIf='edit' type = "submit" [disabled]="!prof.valid || !prof.touched || profSubmitted" class="btn btn-success">Zapisz zmiany</button>
+            <button *ngIf='!edit' (click)='edit = !edit' class="btn btn-success">Edytuj profil</button>
+            <button *ngIf='edit' (click)='edit = !edit' class="btn btn-success">Anuluj</button>
+            <button *ngIf='!edit' (click)='deleteProfile()' class="btn btn-success">Usuń profil</button>
+        </div>
+        <div class="field">
+            <p class="warning">{{ error }}</p>
+        </div>
+        <div class="field">
+            <p class="success">{{ ok }}</p>
+        </div>
+    </form>
+</section>

@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@material/card": "^9.0.0",
+    "@material/select": "^10.0.0",
     "@ng-bootstrap/ng-bootstrap": "^5.3.1",
     "bootstrap": "^5.0.0-beta1",
     "bulma": "^0.9.1",

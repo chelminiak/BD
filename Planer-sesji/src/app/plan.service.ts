@@ -127,6 +127,23 @@ export class PlanService {
     )
   }
 
+  getPossibleTerms(login){
+    return this.http.post("https://g19.labagh.pl/php/searcher_termin.php", { login })
+    .pipe(map((data) => {
+      this.terms = data['data']
+      return this.terms;    
+    }),
+    catchError(this.handleSearchError));
+  }
+
+  selectTerm(id, id_drużyna){
+    return this.http.post("https://g19.labagh.pl/php/add_to_term.php", { id, id_drużyna })
+    .pipe(map((data)=> {
+      return data
+    }),
+    catchError(this.handleTermError))
+  }
+
   getTeams(login){
     return this.http.post("https://g19.labagh.pl/php/get_team.php", { login })
     .pipe(map((data) => {
@@ -265,6 +282,10 @@ export class PlanService {
     return throwError('Nie udało się dołączyć do wybranego zespołu. Proszę spróbować później')
   }
 
+  handleTermError(error: HttpErrorResponse){
+    return throwError('Nie udało się zarezerwować wybranego terminu')
+  }
+
   handleDelError(error: HttpErrorResponse){
     if(error.status == 430){
       return throwError('Nie znaleziono loginu w bazie!')
@@ -303,7 +324,39 @@ export class PlanService {
     catchError(this.handleGetProfileError));
   }
 
+  updateProfile(login, experience, system, system2, system3, name, email, city, money=0, min=0){
+    return this.http.post("https://g19.labagh.pl/php/update_profile.php", {login, experience, system, system2, system3, name, email, city, money, min})
+    .pipe(map((data)=>{
+      return data
+    }),
+    catchError(this.handleUpdateError));
+  }
+
+  deleteProfile(login){
+    return this.http.post("https://g19.labagh.pl/php/del_profile.php", {login})
+    .pipe(map((data)=>{
+      return data
+    }),
+    catchError(this.handleDeleteError));
+  }
+
   handleGetProfileError(error: HttpErrorResponse){
       return throwError('Nie znaleziono podanego loginu w bazie!')
+  }
+
+  handleUpdateError(error: HttpErrorResponse){
+    if(error.status==420){
+      return throwError('Wszystkie nowe wartości nie mogą być takie same, jak poprzednie!')
+    }else{
+      return throwError('Nie udało się zaktualizować twojego profilu')
+    }
+  }
+
+  handleDeleteError(error: HttpErrorResponse){
+    if(error.status==450){
+      return throwError('Przed usunięciem profilu, pomóż nam utrzymać porządek na portalu i usuń wszystkie swoje miejsca, terminy i drużyny')
+    } else{
+      return throwError('Nie udało się usunąć profilu')
+    }
   }
 }

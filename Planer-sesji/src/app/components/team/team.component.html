@@ -24,6 +24,8 @@
                 <button mat-button (click)="delTeam(item.id)">Usuń</button>
             </mat-card-actions>
         </mat-card>
+    </div>
+    <div>
         <mat-card class='addition' *ngIf='master' (click)='addTeam()'>
             <a><mat-card-title class="add" (click)='addTeam()'>Dodaj nową drużynę</mat-card-title></a>
         </mat-card>
@@ -31,8 +33,11 @@
     <div>
         <h2>Drużyny, do których możesz należeć</h2>
     </div>
-    <div>
+    <div *ngIf='search'>
         <p class='err'><br>{{search_error}}</p>
+    </div>
+    <div *ngIf='!search'>
+        <p class='err'>Osiągnąłeś limit liczby zespołów, do których możesz należeć!</p>
     </div>
     <div *ngIf='search'>
         <mat-card class='card' *ngFor='let item of possible'>

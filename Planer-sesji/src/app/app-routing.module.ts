@@ -9,6 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlaceComponent } from './components/place/place.component';
 import { AddTermComponent } from './components/add-term/add-term.component';
 import { AddPlaceComponent } from './components/add-place/add-place.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'miejsca',
     component: PlaceComponent
+  },
+  {
+    path: 'profil',
+    component: ProfileComponent
   },
   {
     path: 'dodaj_druzyne',

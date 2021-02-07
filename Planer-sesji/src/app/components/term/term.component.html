@@ -23,6 +23,8 @@
                 <button mat-button (click)="delTerm(item.id)">Usuń</button>            
             </mat-card-actions>
         </mat-card>
+    </div>
+    <div>
         <mat-card class='addition' *ngIf='master' (click)='addTerm()'>
             <a><mat-card-title class="add" (click)='addTerm()'>Dodaj nowy termin</mat-card-title></a>
         </mat-card>
@@ -33,7 +35,7 @@
     <div>
         <p class='err'><br>{{search_error}}</p>
     </div>
-    <!--<div>
+    <div>
         <mat-card class='card' *ngFor='let item of possible'>
             <mat-card-header>
                 <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
@@ -45,8 +47,15 @@
                 <p>Czas zakończenia: {{item.czas_stop | date:'dd/mm/yyyy':'+0100'}}</p><br>
             </mat-card-content>
             <mat-card-actions align="start">
-                <button mat-button (click)="chooseTerm(item.id)">Usuń</button>            
+                <form [formGroup] = 'search'>
+                    <mat-form-field>
+                        <select class='input' formControlName='team'>
+                            <option *ngFor='let team of teams' [value]="team"> {{ team.gracze[0].login }}, {{ team.gracze[1]?.login }}, {{ team.gracze[2]?.login }}, {{ team.gracze[3]?.login }}</option>
+                        </select>
+                        <button mat-button (click)="chooseTerm(item)">Usuń</button>        
+                    </mat-form-field>    
+                </form>
             </mat-card-actions>
         </mat-card>
-    </div>-->
+    </div>
 </section>

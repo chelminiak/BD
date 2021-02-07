@@ -59,6 +59,7 @@ export class Team{
     id_mistrzowie: number;
     mistrz: Master;
     l_czlonkow: number;
+    gracze: Player[];
     max_l_czlonkow: number;
     system: string;
     l_odbytych_sesji: number;
@@ -137,8 +138,8 @@ export class Data{
     system = ['Advanced Dungeons and Dragons', 'Alien', 'Autorski', 'Blades in the Dark', 'Cent RPG', 'Cyberpunk 2020', 'Cyberpunk Red', 
     'Dark Heresy', 'Dungeons & Dragons ed. 3', 'Dungeons & Dragons ed. 3.5', 'Dungeons & Dragons ed. 5', 'Dzikie Pola',
     'Equestria: Puść Wodze Fantazji', 'FUNT', 'KULT', 'Miasto Mgły', 'MidGuard', 'Mork Borg', 'PAX', 'Pillars of Eternity', 'Pulp Cthulhu', 
-    'Potwór Tygodnia', 'Savage Worlds', 'Słowianie', 'Świat Mroku', 'Tales from the Loop', 'The Excellents', 'Wampir: Maskarada', 'Warhammer ed.2',
-    'Warhammer ed.4', 'Wolsung', 'Zew Cthulhu ed. 5/5.5', 'Zew Cthulhu ed.7'];
+    'Potwór Tygodnia', 'Savage Worlds', 'Słowianie', 'Świat Mroku', 'Tales from the Loop', 'Tales of the Flood', 'The Excellents',
+    'Wampir: Maskarada', 'Warhammer ed.2', 'Warhammer ed.4', 'Wolsung', 'Zew Cthulhu ed. 5/5.5', 'Zew Cthulhu ed.7'];
     experience = ['0', '1', '2', '3', '4', '5', '6', '7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24',
     '25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40'];
     cities = ["Warszawa", "Kraków", "Łódź", "Wrocław", "Poznań", "Gdańsk", "Szczecin", "Bydgoszcz", "Lublin", "Białystok",
@@ -148,6 +149,6 @@ export class Data{
     "Jastrzębie-Zdrój", "Nowy Sącz", "Jelenia Góra", "Siedlce", "Mysłowice", "Konin", "Piła", "Piotrków Trybunalski", "Inowrocław",
     "Lubin", "Ostrów Wielkopolski", "Suwałki"]
     max = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-    floor = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+    floor = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']
     placetype = ['akademik', 'bar/pub', 'dom', 'działka', 'mieszkanie']
 }
