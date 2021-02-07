@@ -19,25 +19,25 @@ if(isset($postdata) && !empty($postdata))
      {
          $cr = 0;
          while(mysqli_stmt_fetch($stmt))
-         {
+	 {
              $data[$cr] = [id=>$id, id_druzyna=>$id_druzyna, id_mistrzowie=>$id_mistrzowie, id_lokalizacja=>$id_lokalizacja, system=>$system, czas_start=>$czas_start, czas_stop=>$czas_stop]; //tak zwaracac wiecej niz jedno pole
              $cr++;
-         }
-         mysqli_stmt_close($stmt);
+	 }
+	 mysqli_stmt_close($stmt);
 
-         $temp_array = array();
-         $i = 0;
-         $key_array = array();
-         $key = 'id';
-         foreach($data as $val) {
-                if (!in_array($val[$key], $key_array)) {
-                        $key_array[$i] = $val[$key];
-                        $temp_array[$i] = $val;
-                }
-                $i++;
-         }
-         $data = $temp_array;
-         echo json_encode(['data'=>$data]);
+	 $temp_array = array();
+    	 $i = 0;
+    	 $key_array = array();
+	 $key = 'id';
+    	 foreach($data as $val) {
+        	if (!in_array($val[$key], $key_array)) {
+            		$key_array[$i] = $val[$key];
+            		$temp_array[] = $val;
+        	}
+        	$i++;
+    	 }	
+     	 $data = $temp_array;
+	 echo json_encode(['data'=>$data]);
      }
      else
      {

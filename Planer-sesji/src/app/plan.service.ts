@@ -136,8 +136,8 @@ export class PlanService {
     catchError(this.handleSearchError));
   }
 
-  selectTerm(id, id_drużyna){
-    return this.http.post("https://g19.labagh.pl/php/add_to_term.php", { id, id_drużyna })
+  selectTerm(id, id_druzyna){
+    return this.http.post("https://g19.labagh.pl/php/add_to_termin.php", { id, id_druzyna })
     .pipe(map((data)=> {
       return data
     }),

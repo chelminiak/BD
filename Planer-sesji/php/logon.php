@@ -30,7 +30,7 @@ if($stmt = mysqli_prepare($con,$sql))
 
     if (password_verify($password,$hash)) {
         http_response_code(201);
-        echo json_encode('player');
+	echo json_encode('player');
     }
     else{
         echo 'Invalid password.';
@@ -38,29 +38,32 @@ if($stmt = mysqli_prepare($con,$sql))
     }
    }
    elseif($stmt = mysqli_prepare($con,$sql1))
-   {
+   { 
       mysqli_stmt_bind_param($stmt, "s", $login);
       mysqli_stmt_bind_result($stmt, $hash);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_store_result($stmt);
-
+ 
       if (mysqli_stmt_num_rows($stmt) > 0)
-      {
+      { 
           mysqli_stmt_fetch($stmt);
           mysqli_stmt_close($stmt);
-
-          if (password_verify($password, $hash)) {
+   
+     	  if (password_verify($password, $hash)) {
             http_response_code(201);
-            echo json_encode('master');
-          }
+	    echo json_encode('master');
+          } 
           else
           {
             echo 'Invalid password.';
             http_response_code(300);
           }
-       }
-    }
+       } else{
+  	    http_response_code(404);
+	    }
 
+    }
+      
 }
 
 else
@@ -68,3 +71,4 @@ else
   http_response_code(404);
 }
 }
+

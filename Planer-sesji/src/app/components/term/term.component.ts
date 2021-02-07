@@ -1,4 +1,4 @@
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Term, Master, Team, Place, Player } from './../../classes';
 import { PlanService } from 'src/app/plan.service';
@@ -19,60 +19,41 @@ export class TermComponent implements OnInit {
   master = false;
   prof: Player;
   search_error: string
-  team1: Team;
-  team2: Team;
-  team3: Team;
-  team4: Team;
   teams: Team[]
   t: Team;
   i: Term;
-  search = this.formBuilder.group({
-    team:[null, [Validators.required]]
+  search = new FormGroup({
+    team: new FormControl('')
   })
 
   constructor(private planService: PlanService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     if(sessionStorage.getItem('type') == '"master"' || sessionStorage.getItem('type') == '"player"'){
+      this.search = this.formBuilder.group({
+        team:[null, [Validators.required]]
+      })
       if(sessionStorage.getItem('type') == '"master"'){
         this.master = true
       } else if(sessionStorage.getItem('type') == '"player"'){
         this.planService.getPlayer(sessionStorage.getItem('user')).subscribe(
           (res: Player) => {
             this.prof = res
-            if(this.prof.id_druzyna){
-              this.planService.resolveTeam(this.prof.id_druzyna).subscribe(
-                (res: Team) => {
-                  this.team1 = res
-                },
-                (err) => {}
-              )
-            }
-            if(this.prof.id_druzyna2){
-              this.planService.resolveTeam(this.prof.id_druzyna2).subscribe(
-                (res: Team) => {
-                  this.team2 = res
-                },
-                (err) => {}
-              )
-            }
-            if(this.prof.id_druzyna3){
-              this.planService.resolveTeam(this.prof.id_druzyna3).subscribe(
-                (res: Team) => {
-                  this.team3 = res
-                },
-                (err) => {}
-              )
-            }
-            if(this.prof.id_druzyna4){
-              this.planService.resolveTeam(this.prof.id_druzyna4).subscribe(
-                (res: Team) => {
-                  this.team4 = res
-                },
-                (err) => {}
-              )
-            }
-            this.teams = [this.team1, this.team2, this.team3, this.team4]
+            this.planService.getPlayerTeams(sessionStorage.getItem('user')).subscribe(
+              (res: Team[]) => {
+                this.teams = res
+                for (let item of this.teams){
+                  this.planService.resolveMaster(item.id_mistrzowie).subscribe(
+                    (res: Master) => {
+                      item.mistrz = res
+                    }
+                  )
+                }
+              },
+              (err) => {
+                this.error = err
+              }
+            )
           }
         )
         
@@ -183,6 +164,18 @@ export class TermComponent implements OnInit {
     this.planService.getPossibleTerms(sessionStorage.getItem('user')).subscribe(
       (res: Term[]) => {
         this.possible = res
+        for (let item of this.possible){
+          this.planService.resolveMaster(item.id_mistrzowie).subscribe(
+            (res: Master) => {
+              item.mistrz = res
+            }
+          )
+          this.planService.resolvePlace(item.id_lokalizacja).subscribe(
+            (res: Place) => {
+              item.lokalizacja = res
+            }
+          )
+        }
       },
       (err) => {
         this.search_error = err
@@ -191,8 +184,16 @@ export class TermComponent implements OnInit {
   }
 
   chooseTerm(term){
-    this.t = this.search.get('team').value
+    for(let item of this.teams){
+      if(item.id == this.search.get('team').value){
+        this.t = item
+      }
+    }
     this.i = term
+    console.log(this.prof)
+    console.log(this.t)
+    console.log(this.i)
+    console.log(this.teams)
     if(this.t.id_mistrzowie == this.i.id_mistrzowie){
       this.planService.selectTerm(this.i.id, this.t.id).subscribe(
         res => {
@@ -203,7 +204,7 @@ export class TermComponent implements OnInit {
         }
       )
     } else{
-      this.search_error = 'Wybrana przez ciebie drużyna nie moża zapisać się na wskazany termin'
+      this.search_error = 'Wybrana przez ciebie drużyna nie może zapisać się na wskazany termin'
     }
   }
 

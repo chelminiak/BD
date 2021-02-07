@@ -16,8 +16,8 @@
                 <p *ngIf='team'>Drużyna: {{item.druzyna?.nazwa}}</p><br>
                 <p>Członkowie drużyny:</p>
                 <p *ngFor='let pl of item.gracze'>{{pl?.login}}, {{pl?.imie}}</p><br>
-                <p>Czas rozpoczęcia: {{item.czas_start | date:'dd/mm/yyyy':'+0100'}}</p><br>
-                <p>Czas zakończenia: {{item.czas_stop | date:'dd/mm/yyyy':'+0100'}}</p><br>
+                <p>Czas rozpoczęcia: {{item.czas_start}}</p><br>
+                <p>Czas zakończenia: {{item.czas_stop}}</p><br>
             </mat-card-content>
             <mat-card-actions align="start" *ngIf='master'>
                 <button mat-button (click)="delTerm(item.id)">Usuń</button>            
@@ -36,25 +36,23 @@
         <p class='err'><br>{{search_error}}</p>
     </div>
     <div>
-        <mat-card class='card' *ngFor='let item of possible'>
+        <mat-card class='card' *ngFor='let pos of possible'>
             <mat-card-header>
-                <mat-card-title>Mistrz gry: {{item.mistrz?.login}}, {{item.mistrz?.imie}}</mat-card-title>
-                <mat-card-subtitle>{{item.system}}</mat-card-subtitle>
+                <mat-card-title>Mistrz gry: {{pos.mistrz?.login}}, {{pos.mistrz?.imie}}</mat-card-title>
+                <mat-card-subtitle>{{pos.system}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p>Lokalizacja: {{item.lokalizacja?.adres}}, {{item.lokalizacja?.miasto}}</p><br>
-                <p>Czas rozpoczęcia: {{item.czas_start | date:'dd/mm/yyyy':'+0100'}}</p><br>
-                <p>Czas zakończenia: {{item.czas_stop | date:'dd/mm/yyyy':'+0100'}}</p><br>
+                <p>Lokalizacja: {{pos.lokalizacja?.adres}}, {{pos.lokalizacja?.miasto}}</p><br>
+                <p>Czas rozpoczęcia: {{pos.czas_start}}</p><br>
+                <p>Czas zakończenia: {{pos.czas_stop}}</p><br>
             </mat-card-content>
             <mat-card-actions align="start">
-                <form [formGroup] = 'search'>
-                    <mat-form-field>
+                    <form [formGroup] = 'search'>
                         <select class='input' formControlName='team'>
-                            <option *ngFor='let team of teams' [value]="team"> {{ team.gracze[0].login }}, {{ team.gracze[1]?.login }}, {{ team.gracze[2]?.login }}, {{ team.gracze[3]?.login }}</option>
+                            <option *ngFor='let team of teams' [value]="team.id">{{team.mistrz.login}}</option>
                         </select>
-                        <button mat-button (click)="chooseTerm(item)">Usuń</button>        
-                    </mat-form-field>    
-                </form>
+                        <button mat-button (click)="chooseTerm(pos)">Wybierz termin</button>       
+                    </form> 
             </mat-card-actions>
         </mat-card>
     </div>
