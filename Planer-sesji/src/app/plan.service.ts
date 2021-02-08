@@ -44,6 +44,9 @@ export class PlanService {
     if(error.status==422){
       return throwError('Błąd rejestracji. Proszę spróbować później')
     }
+    if(error.status==423){
+      return throwError('Podany login jest już zajęty')
+    }
   }
 
   log(login, password){

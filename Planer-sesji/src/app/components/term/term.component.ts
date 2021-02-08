@@ -190,10 +190,6 @@ export class TermComponent implements OnInit {
       }
     }
     this.i = term
-    console.log(this.prof)
-    console.log(this.t)
-    console.log(this.i)
-    console.log(this.teams)
     if(this.t.id_mistrzowie == this.i.id_mistrzowie){
       this.planService.selectTerm(this.i.id, this.t.id).subscribe(
         res => {

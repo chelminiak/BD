@@ -16,11 +16,11 @@
         </div>
         <div class="field">
             <label>Data początku</label>
-            <input type="datetime-local" name="start" class="input" formControlName="start" [ngClass]="{'addterm-submitted': addtermSubmitted}">
+            <input type="datetime-local" name="start" class="input" formControlName="start" min='new Date()' [ngClass]="{'addterm-submitted': addtermSubmitted}">
         </div>
         <div class="field">
             <label>Data końca</label>
-            <input type="datetime-local" name="stop" class="input" formControlName="stop" min='this.addterm.get("start").value' [ngClass]="{'addterm-submitted': addtermSubmitted}">
+            <input type="datetime-local" name="stop" class="input" formControlName="stop" [ngClass]="{'addterm-submitted': addtermSubmitted}">
         </div>
         <div class="field">
             <button type = "submit" [disabled]="!addterm.valid || !addterm.touched || addtermSubmitted" class="btn btn-success">Dodaj termin</button><br>

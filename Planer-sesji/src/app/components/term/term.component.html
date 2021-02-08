@@ -49,7 +49,7 @@
             <mat-card-actions align="start">
                     <form [formGroup] = 'search'>
                         <select class='input' formControlName='team'>
-                            <option *ngFor='let team of teams' [value]="team.id">{{team.mistrz.login}}</option>
+                            <option *ngFor='let team of teams' [value]="team.id">{{team.mistrz?.login}}, {{team.system}}, {{team.nazwa || 'Drużyna bez nazwy'}}</option>
                         </select>
                         <button mat-button (click)="chooseTerm(pos)">Wybierz termin</button>       
                     </form> 

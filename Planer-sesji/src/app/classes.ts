@@ -64,6 +64,7 @@ export class Team{
     system: string;
     l_odbytych_sesji: number;
     nazwa: string;
+    i = 1;
     constructor(
         id: number,
         id_mistrzowie: number,
