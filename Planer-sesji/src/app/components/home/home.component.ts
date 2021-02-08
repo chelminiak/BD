@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  logged = false
+  name: string
+
+  constructor() {}
 
   ngOnInit() {
+    localStorage.clear()
+    if(sessionStorage.getItem('type') == '"master"' || sessionStorage.getItem('type') == '"player"'){
+      this.logged = true;
+    }
   }
 
 }

@@ -29,13 +29,13 @@
             <a><mat-card-title class="add" (click)='addTerm()'>Dodaj nowy termin</mat-card-title></a>
         </mat-card>
     </div>
-    <div>
+    <div *ngIf='player'>
         <h2>Terminy, które możesz wybrać</h2>
     </div>
-    <div>
+    <div *ngIf='player'>
         <p class='err'><br>{{search_error}}</p>
     </div>
-    <div>
+    <div *ngIf='player'>
         <mat-card class='card' *ngFor='let pos of possible'>
             <mat-card-header>
                 <mat-card-title>Mistrz gry: {{pos.mistrz?.login}}, {{pos.mistrz?.imie}}</mat-card-title>

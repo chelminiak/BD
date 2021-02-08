@@ -8,9 +8,9 @@
         </div>
         <div class="field">
             <label>Adres e-mail:</label>
-            <p *ngIf='master'>{{profilem?.email}}</p>
+            <p *ngIf='master&&!edit'>{{profilem?.email}}</p>
             <input *ngIf='master&&edit' type="text" name="email" class="input" formControlName="email" value={{profilem?.email}} [ngClass]="{'prof-submitted': profSubmitted}">
-            <p *ngIf='player'>{{profilep?.email}}</p>
+            <p *ngIf='player&&!edit'>{{profilep?.email}}</p>
             <input *ngIf='player&&edit' type="text" name="email" class="input" formControlName="email" value={{profilep?.email}} [ngClass]="{'prof-submitted': profSubmitted}">
         </div>
         <div class="field">
