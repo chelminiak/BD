@@ -20,8 +20,7 @@ if(isset($postdata) && !empty($postdata))
          $cr = 0;
          while(mysqli_stmt_fetch($stmt))
          {
-             $data[$cr] = [id=>$id, id_druzyna=>$id_druzyna, id_mistrzowie=>$id_mistrzowie, id_lokalizacja=>$id_lokalizacja, system=>$syst
-em, czas_start=>$czas_start, czas_stop=>$czas_stop]; //tak zwaracac wiecej niz jedno pole
+             $data[$cr] = [id=>$id, id_druzyna=>$id_druzyna, id_mistrzowie=>$id_mistrzowie, id_lokalizacja=>$id_lokalizacja, system=>$system, czas_start=>$czas_start, czas_stop=>$czas_stop]; //tak zwaracac wiecej niz jedno pole
              $cr++;
          }
          mysqli_stmt_close($stmt);

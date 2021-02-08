@@ -18,7 +18,7 @@ if(isset($postdata) && !empty($postdata))
      if (mysqli_stmt_num_rows($stmt) > 0)
      {
          mysqli_stmt_fetch($stmt);
-             $data = [id=>$id, login=>$login, haslo=>$haslo, system=>$system, system2=>$system2, system3=>$system3, l_poprowadzonych=>$l_poprowadzonych, imie=>$imie, oplata_za_sesje=>$oplata_za_sesje, staz=>$staz, minimalny_staz_gracza=>$minimalny_staz_gracza, email=>$email, miasto=>$miasto]; //tak zwaracac wiecej niz jedno pole
+         $data = [id=>$id, login=>$login, haslo=>$haslo, system=>$system, system2=>$system2, system3=>$system3, l_poprowadzonych=>$l_poprowadzonych, imie=>$imie, oplata_za_sesje=>$oplata_za_sesje, staz=>$staz, minimalny_staz_gracza=>$minimalny_staz_gracza, email=>$email, miasto=>$miasto]; //tak zwaracac wiecej niz jedno pole
          mysqli_stmt_close($stmt);
          echo json_encode(['data'=>$data]);
      }
@@ -38,15 +38,15 @@ if(isset($postdata) && !empty($postdata))
               mysqli_stmt_close($stmt);
               echo json_encode(['data'=>$data]);
            }
-           else
-           {  
-              http_response_code(420);//gracz nie istnieje lub bledny login
-           }
+	   else
+	   {     
+	      http_response_code(420);//gracz nie istnieje lub bledny login
+	   }
         }
-        else
-        {
-           http_response_code(404);
-        }
+	else
+	{
+      	   http_response_code(404);
+	}
      }
    }
    else

@@ -19,16 +19,16 @@ if(isset($postdata) && !empty($postdata))
       while($row = mysqli_fetch_assoc($result))
       {
         $id_mistrzowie = $row['id'];
-
+        
       }
      }
      else
      {
         http_response_code(430);
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
      }
    }
-
+   
     $address = $request->address;
     $city = $request->city;
     $max_people = $request->max_people;
@@ -42,11 +42,10 @@ if(isset($postdata) && !empty($postdata))
   if(mysqli_query($con,$sql))
   {
     http_response_code(201);
-    echo "Records inserted successfully.";
   }
   else
   {
     http_response_code(422);
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+    //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
   }
 }

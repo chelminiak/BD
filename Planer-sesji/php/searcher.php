@@ -10,23 +10,20 @@ if(isset($postdata) && !empty($postdata))
   $request = json_decode($postdata);
 
   $login = $request->login;
-  $sql = "SELECT druzyna.* from druzyna,gracze where druzyna.l_czlonkow < druzyna.max_l_czlonkow AND (druzyna.system = gracze.system OR druzyna.system = gracze.system2 OR druzyna.system = gracze.system3) AND gracze.login = '$login'";
+  $sql = "SELECT druzyna.* from druzyna,gracze where druzyna.l_czlonkow < druzyna.max_l_czlonkow AND (druzyna.system = gracze.system OR druzyna.system = gracze.system2 OR druzyna.system = gracze.system3) AND gracze.login = '$login' AND NOT gracze.id_druzyna <=> druzyna.id AND NOT gracze.id_druzyna2 <=> druzyna.id AND NOT gracze.id_druzyna3 <=> druzyna.id AND NOT gracze.id_druzyna4 <=> druzyna.id";
 
 
-  //$sql = "SELECT * from druzyna where druzyna.id_mistrzowie = '$id_mistrzowie'";
   if($result = mysqli_query($con,$sql))
   {
     if (mysqli_num_rows($result) > 0)
     {
+      $cr = 0;
       while($row = mysqli_fetch_array($result))
       {
-        //echo "cosik";
-        //echo $row;
-        //echo $row['id'];
-        //echo  $data;
-        $data = $row;
+	$data[$cr] = $row;
+        $cr++;
       }
-      echo json_encode($data);//można dać np $data['id'];
+      echo json_encode(['data'=>$data]);    
     }
     else{
       http_response_code(435);

@@ -30,12 +30,11 @@ if(isset($postdata) && !empty($postdata))
         if(mysqli_query($con,$sql))
         {
           http_response_code(201);
-          echo "Records inserted successfully.";
         }
         else
         {
           http_response_code(422);
-          echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+          //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
         }
        }
        else{

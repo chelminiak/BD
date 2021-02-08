@@ -1,6 +1,7 @@
 <?php
 
 require 'connect.php';
+$data = array();
 $postdata = file_get_contents("php://input");
 if(isset($postdata) && !empty($postdata))
 {
@@ -8,28 +9,19 @@ if(isset($postdata) && !empty($postdata))
   $request = json_decode($postdata);
 
   $id= $request->id;
-  $sql = "SELECT imie from gracze g where g.id_druzyna =?";
-  if($stmt = mysqli_prepare($con,$sql))
+  $sql = "SELECT * from gracze g where g.id_druzyna ='$id'";
+  if($result = mysqli_query($con,$sql))
   {
-     mysqli_stmt_bind_param($stmt, "s", $id);
-     mysqli_stmt_bind_result($stmt, $name); //dodac po przecinku kolejne paramtry jak chcesz zwrocic wiecej niz 1
-     mysqli_stmt_execute($stmt);
-     mysqli_stmt_store_result($stmt);
-     if (mysqli_stmt_num_rows($stmt) > 0)
-     {
-         $cr = 0;
-         while(mysqli_stmt_fetch($stmt))
-         {
-             $data[$cr] =  $name; //tak zwaracac wiecej niz jedno pole
-             $cr++;
-         }
-         mysqli_stmt_close($stmt);
-         echo json_encode(['data'=>$data]);
-     }
-     else
-     {
-        http_response_code(420);
-     }
+    if (mysqli_num_rows($result) > 0)
+    {
+      $cr = 0;
+      while($row = mysqli_fetch_array($result))
+      {
+        $data[$cr] = $row;
+	$cr++;
+      }
+      echo json_encode(['data'=>$data]);
+    }
    }
    else
    {

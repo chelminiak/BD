@@ -36,24 +36,25 @@ if(isset($postdata) && !empty($postdata))
     mysqli_stmt_bind_param($stmt, "i",  $id);
     mysqli_stmt_execute($stmt);
     if(mysqli_stmt_affected_rows($stmt) > 0)
-    {
+    { 
         http_response_code(204);
     }
     else
-    {    
+    {	
        if(mysqli_errno($con) == 1451)
-       {  
-          return http_response_code(450); //gdy nie moze zmienic rodzica, klucz obcy dopisany gdzies
+       {
+          http_response_code(450); //gdy nie moze zmienic rodzica, klucz obcy dopisany gdzies	  
        }
        else
        {
-          return http_response_code(423);// brak wykonania zapytania - rozne przyczyny, m.in sql err
+          http_response_code(423);// brak wykonania zapytania - rone przyczyny, m.in sql err
        }
     }
      mysqli_stmt_close($stmt);
   }
   else
   {
-     return http_response_code(422);
+     http_response_code(422);
   }
 }
+

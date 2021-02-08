@@ -50,7 +50,7 @@ if(isset($postdata) && !empty($postdata))
         {
            mysqli_stmt_execute($stmt);
            if(mysqli_stmt_affected_rows($stmt) > 0)
-          {
+           {
               http_response_code(201);
            }
            else
@@ -86,4 +86,3 @@ if(isset($postdata) && !empty($postdata))
       http_response_code(404);
    }
 }
-

@@ -25,7 +25,7 @@ if(isset($postdata) && !empty($postdata))
      if($result = mysqli_query($con,$sql))
      {
        if (mysqli_num_rows($result) == 0)
-       {
+       {  
           $sql = "INSERT INTO mistrzowie (mistrzowie.login,mistrzowie.haslo, mistrzowie.system, mistrzowie.system2, mistrzowie.system3, mistrzowie.l_poprowadzonych, mistrzowie.imie, mistrzowie.oplata_za_sesje,mistrzowie.staz,mistrzowie.email,mistrzowie.miasto) VALUES ('$login','$hashed_password','$system','$system2','$system3',0,'$name','$price','$experience','$email','$city')";
         if(mysqli_query($con,$sql))
         {
@@ -35,7 +35,7 @@ if(isset($postdata) && !empty($postdata))
         else
         {
           http_response_code(422);
-          echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+          //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
         }
        }
        else{

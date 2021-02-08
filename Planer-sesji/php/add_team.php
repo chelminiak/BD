@@ -25,26 +25,24 @@ if(isset($postdata) && !empty($postdata))
      else
      {
         http_response_code(430);
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
      }
    }
 
-    $num_people = $request->num_people;
     $max_people = $request->max_people;
     $system = $request->system;
     $num_sessions = $request->num_sessions;
     $name = $request->name;
-    $sql = "INSERT INTO druzyna (druzyna.id_mistrzowie,druzyna.l_czlonkow,druzyna.max_l_czlonkow,druzyna.system,druzyna.l_odbytych_sesji,druzyna.nazwa) VALUES ('$id_mistrzowie','$num_people','$max_people','$system','$num_sessions','$name')";
+    $sql = "INSERT INTO druzyna (druzyna.id_mistrzowie,druzyna.l_czlonkow,druzyna.max_l_czlonkow,druzyna.system,druzyna.l_odbytych_sesji,druzyna.nazwa) VALUES ('$id_mistrzowie', 0,'$max_people','$system','$num_sessions','$name')";
 
    //true podawac jako 1, false = 0
   if(mysqli_query($con,$sql))
   {
     http_response_code(201);
-    echo "Records inserted successfully.";
   }
   else
   {
     http_response_code(422);
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+    //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
   }
 }

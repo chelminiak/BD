@@ -24,7 +24,7 @@ if(isset($postdata) && !empty($postdata))
      else
      {
         http_response_code(430);
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
      }
    }
 
@@ -42,6 +42,6 @@ if(isset($postdata) && !empty($postdata))
   else
   {
     http_response_code(422);
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+    //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
   }
 }

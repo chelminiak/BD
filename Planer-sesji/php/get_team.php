@@ -1,8 +1,7 @@
 <?php
-/**
- * Returns the list of cars.
- */
+
 require 'connect.php';
+$postdata = file_get_contents("php://input");
 $data = array();
 
 if(isset($postdata) && !empty($postdata))
@@ -25,11 +24,10 @@ if(isset($postdata) && !empty($postdata))
      else
      {
         http_response_code(430);
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        //echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
      }
    }
 
-  //$id_mistrzowie = 27;
   $sql = "SELECT * from druzyna where druzyna.id_mistrzowie = '$id_mistrzowie'";
   if($result = mysqli_query($con,$sql))
   {
@@ -38,13 +36,10 @@ if(isset($postdata) && !empty($postdata))
       $cr = 0;
       while($row = mysqli_fetch_array($result))
       {
-        //echo "cosik";
-        //echo $row;
-        //echo $row['id'];
-        //echo  $data;
-        $data = $row;
+    	$data[$cr] = $row;
+        $cr++;
       }
-      echo json_encode($data);//można dać np $data['id'];
+      echo json_encode(['data'=>$data]);
     }
   }
   else

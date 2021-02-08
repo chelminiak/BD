@@ -7,7 +7,7 @@ if(isset($postdata) && !empty($postdata))
 {
   // Extract the data.
   $request = json_decode($postdata);
- 
+  
   $login = $request->login;
   $id = $request->id;
   
@@ -45,18 +45,17 @@ if(isset($postdata) && !empty($postdata))
     {  
        if(mysqli_errno($con) == 1451)
        {  
-          return http_response_code(450); //gdy nie moze zmienic rodzica, klucz obcy dopisany gdzies
+          http_response_code(450); //gdy nie moze zmienic rodzica, klucz obcy dopisany gdzies
        }
        else
        {
-          return http_response_code(423);// brak wykonania zapytania - rozne przyczyny, m.in sql err, nieistniejace id, niepasujace id mistrza itp
+          http_response_code(423);// brak wykonania zapytania - rozne przyczyny, m.in sql err, nieistniejace id, niepasujace id mistrza itp
        }
     }
      mysqli_stmt_close($stmt);
   }
   else
   {
-     return http_response_code(422);
+     http_response_code(422);
   }
 }
-

@@ -59,8 +59,8 @@ if($stmt = mysqli_prepare($con,$sql))
             http_response_code(300);
           }
        } else{
-  	    http_response_code(404);
-	    }
+  	http_response_code(404);
+	}
 
     }
       
